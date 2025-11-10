@@ -1,0 +1,215 @@
+.btn-whatsapp {
+    background: #25d366;
+    color: #fff;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-whatsapp:hover {
+    background: #1da851;
+    transform: translateY(-2px);
+}
+
+.btn-floral {
+    background: #ff4b8b;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s;
+    cursor: pointer;
+}
+
+.btn-floral:hover {
+    background: #e43b78;
+    transform: translateY(-2px);
+}
+
+.btn-qty {
+    width: 32px;
+    height: 32px;
+    font-size: 18px;
+    background: #ff4b8b;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.btn-qty:hover {
+    background: #e43b78;
+    transform: scale(1.05);
+}
+
+
+/* Image Zoom */
+.zoom-container {
+    overflow: hidden;
+    cursor: zoom-in;
+}
+
+.zoom-image {
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                transform-origin 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.zoom-container:hover .zoom-image {
+    transform: scale(2.5);
+}
+
+.product-tabs .nav-link {
+    color: #666;
+    border: none;
+    padding: 12px 24px;
+    font-weight: 600;
+    position: relative;
+    transition: 0.3s;
+}
+
+.product-tabs .nav-link.active {
+    color: #ff4b8b;
+}
+
+.product-tabs .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #ff4b8b;
+    border-radius: 3px 3px 0 0;
+}
+
+.accordion-item {
+    border: none;
+    margin-bottom: 12px;
+    border-radius: 12px;
+}
+
+.accordion-button {
+    background: #ffffff;
+    color: #333;
+    font-weight: 600;
+    padding: 16px 20px;
+}
+
+.accordion-button:not(.collapsed) {
+    background: #ff4b8b;
+    color: #fff;
+}
+
+.accordion-body {
+    padding: 20px;
+    background: #fff;
+    color: #333;
+    line-height: 1.7;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    opacity: 1 !important;
+    visibility: visible !important;
+    display: block !important;
+}
+
+/* Modal */
+.floral-modal { 
+    background: rgba(255, 240, 246, 0.95); 
+    border-radius: 20px; 
+    border: none; 
+    backdrop-filter: blur(10px); 
+    box-shadow: 0 8px 30px rgba(255, 105, 180, 0.2); 
+    animation: fadeInUp 0.4s ease; 
+}
+
+@keyframes fadeInUp { 
+    from { transform: translateY(30px); opacity: 0; } 
+    to { transform: translateY(0); opacity: 1; } 
+}
+
+.floral-input { 
+    background-color: #f2f2f2 !important; 
+    border: none !important; 
+    border-radius: 12px; 
+    padding: 12px 16px; 
+    transition: all 0.3s ease; 
+}
+
+.floral-input:focus { 
+    outline: none; 
+    box-shadow: 0 0 0 3px rgba(255, 128, 171, 0.3); 
+}
+
+.img-preview { 
+    width: 180px; 
+    height: 180px; 
+    object-fit: cover; 
+    border: 4px solid #ffe4ef; 
+}
+
+.btn-floral { 
+    background-color: #ff4b8b; 
+    color: white; 
+    border: none; 
+    transition: 0.3s ease; 
+}
+
+.btn-floral:hover { 
+    background-color: #e43b78; 
+    transform: translateY(-2px); 
+}
+
+.btn-qty { 
+    background-color: #ff4b8b; 
+    color: white; 
+    border: none; 
+    border-radius: 50%; 
+    width: 32px; 
+    height: 32px; 
+    font-size: 18px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    transition: 0.2s; 
+}
+
+.btn-qty:hover { 
+    background-color: #e43b78; 
+    transform: scale(1.05); 
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    margin: 0; 
+}
+
+input[type=number] { 
+    -moz-appearance: textfield; 
+}
+
+.pac-container { 
+    z-index: 99999 !important; 
+}
+
+@media (max-width: 768px) {
+    .product-tabs .nav-link { 
+        padding: 10px 16px; 
+        font-size: 14px; 
+    }
+
+    .spec-item .fw-semibold { 
+        min-width: 120px; 
+        font-size: 14px; 
+    }
+
+    .spec-item .text-muted { 
+        font-size: 13px; 
+    }
+}

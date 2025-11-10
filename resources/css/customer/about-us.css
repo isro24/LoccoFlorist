@@ -1,0 +1,12 @@
+.about-description { 
+    max-width: 700px; 
+}
+.about-image { 
+    max-width: 85%; 
+    height: auto; 
+    object-fit: cover; 
+}
+.about-text { 
+    line-height: 1.8; 
+    text-align: justify; 
+}

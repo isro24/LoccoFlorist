@@ -1,0 +1,40 @@
+
+@media (max-width: 991.98px) { 
+    body.has-footnavbar {
+        padding-bottom: 70px; 
+    }
+}
+
+.footnavbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0.75rem 0.75rem 0 0;
+    background-color: #ffffff;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.footnavbar .nav-link {
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    padding: 8px 10px;
+    color: #2e2d2d;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+    transition: color 0.2s ease-in-out;
+}
+
+.footnavbar .nav-link i {
+    font-size: 1.5rem; 
+    margin-bottom: 2px;
+}
+
+.footnavbar .nav-link:hover,
+.footnavbar .nav-link.active {
+    color: #ff79b0; 
+}
