@@ -3,46 +3,39 @@
 @section('title', 'Daftar Kategori')
 
 @section('content')
-<div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="h3">Daftar Kategori</h1>
-    <a href="{{ route('admin.category.create') }}" class="btn btn-primary">Tambah Kategori</a>
-</div>
+<div class="container mx-auto px-4">
 
-@if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
+    <div class="flex flex-row justify-between items-center mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-1">Daftar Kategori</h2>
+            <p class="text-gray-500 mb-0">Kelola semua kategori produk Anda</p>
+        </div>
+
+        <a href="{{ route('admin.category.create') }}" 
+            class="px-4 py-2 bg-pinkButton text-white rounded-lg hover:opacity-80 transition-all no-underline">
+            <i class="bi bi-plus mr-2"></i>Tambah Kategori
+        </a>
     </div>
-@endif
 
-<div class="table-responsive">
-    <table class="table table-bordered table-striped align-middle">
-        <thead class="table-dark">
-            <tr>
-                <th>#</th>
-                <th>Nama Kategori</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse($categories as $index => $category)
-            <tr>
-                <td>{{ $index + 1 }}</td>
-                <td>{{ $category->name }}</td>
-                <td>
-                    <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                    <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                    </form>
-                </td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="3" class="text-center">Belum ada kategori.</td>
-            </tr>
-            @endforelse
-        </tbody>
-    </table>
+    <div id="alert-container"></div>
+
+    <div id="table-view">
+        @include('admin.category.partials._category-table')
+
+        @if($categories->hasPages())
+            <div class="mt-6 flex justify-center pagination-links">
+                {{ $categories->links('pagination::tailwind') }}
+            </div>
+        @endif
+    </div>
+
 </div>
+
+<div id="flash-message" 
+     data-success="{{ session('success') ?? '' }}"></div>
 @endsection
+
+@push('scripts')
+    @vite('resources/js/admin/categories.js')
+@endpush
+

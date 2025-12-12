@@ -1,6 +1,18 @@
 $(document).ready(function() {
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
+    // Sweet Alert
+    const flashSuccess = $('#flash-message').data('success');
+    if (flashSuccess) {
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: flashSuccess,
+            timer: 1500,
+            showConfirmButton: false
+        });
+    }
+
     // Load tabel
     function loadTable(url) {
         $.ajax({
@@ -44,6 +56,10 @@ $(document).ready(function() {
                     headers: { 'X-CSRF-TOKEN': csrfToken },
                     success: function(response) {
                         $('#product-row-' + productId).fadeOut(400, function() { $(this).remove(); });
+                        $('#product-table tbody tr').each(function(index) {
+                            $(this).find('td:first').text(index + 1);
+                        })
+                        loadTable(window.location.href);
                         Swal.fire({
                             icon: 'success',
                             title: 'Berhasil!',
@@ -73,6 +89,7 @@ $(document).ready(function() {
     });
 });
 
+// Modal detail produk
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('detailModal');
   const modalContent = document.getElementById('detailModalContent');
@@ -97,20 +114,11 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   closeBtn.addEventListener('click', closeModal);
-
   document.getElementById('detailModalOverlay').addEventListener('click', closeModal);
 
   document.querySelectorAll('.btn-detail').forEach(btn => {
     btn.addEventListener('click', function() {
       const productId = this.dataset.id;
-      openModal();
-
-      document.getElementById('detail-name').textContent = 'Memuat...';
-      document.getElementById('detail-category').textContent = 'Memuat...';
-      document.getElementById('detail-price').textContent = 'Memuat...';
-      document.getElementById('detail-status').textContent = 'Memuat...';
-      document.getElementById('detail-description').textContent = 'Memuat...';
-      document.getElementById('detail-image').innerHTML = `<div class="bg-gray-200 rounded-lg flex items-center justify-center h-64 animate-pulse"></div>`;
 
       fetch(`/admin/product/${productId}`)
         .then(res => res.json())
@@ -119,17 +127,16 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('detail-category').textContent = product.category ? product.category.name : '-';
           document.getElementById('detail-price').textContent = `Rp ${Number(product.price).toLocaleString('id-ID')}`;
           document.getElementById('detail-status').innerHTML = product.status
-            ? '<span class="inline-block bg-green-500 text-white px-3 py-1 rounded-full text-sm">Tersedia</span>'
-            : '<span class="inline-block bg-gray-400 text-white px-3 py-1 rounded-full text-sm">Tidak Tersedia</span>';
+            ? '<span class="inline-block bg-greenBg text-white px-3 py-1 rounded-full text-sm">Tersedia</span>'
+            : '<span class="inline-block bg-grayBg text-white px-3 py-1 rounded-full text-sm">Tidak Tersedia</span>';
           document.getElementById('detail-description').innerHTML = (product.description || '-').replace(/\n/g, '<br>');
           document.getElementById('detail-image').innerHTML = product.image
             ? `<img src="/storage/${product.image}" class="w-full h-64 object-cover rounded-lg shadow-sm">`
             : `<div class="bg-gray-200 rounded-lg flex items-center justify-center h-64"><i class="bi bi-image text-5xl text-gray-400"></i></div>`;
+
+          openModal();
         })
-        .catch(() => {
-          alert('Gagal memuat detail produk');
-          closeModal();
-        });
+        .catch(() => alert('Gagal memuat detail produk'));
     });
   });
 });

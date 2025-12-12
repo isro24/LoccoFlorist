@@ -4,7 +4,7 @@
 ])
 
 <div class="mb-4">
-    <label for="{{ $name }}" class="block text-sm font-semibold text-pink-600 mb-1">{{ $label }}</label>
+    <label for="{{ $name }}" class="block text-sm font-semibold text-textForm mb-1">{{ $label }}</label>
     <input type="file"
            id="{{ $name }}"
            name="{{ $name }}"

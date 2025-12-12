@@ -1,32 +1,33 @@
-@props(['product', 'delay' => 0])
-
-<div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6" data-aos="fade-up" data-aos-delay="{{ $delay }}">
-    <div class="card border-0 shadow-sm h-100 product-card">
-        <a href="{{ route('product.show', $product->id) }}" class="text-decoration-none text-dark">
-            <div class="position-relative overflow-hidden rounded-top">
-                <div class="ratio ratio-1x1">
+<div data-aos="fade-up" data-aos-delay="{{ $delay }}">
+    <div class="border-none shadow-md  h-full bg-white overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow group rounded-lg">
+        <a href="{{ route('product.show', $product->slug) }}" class="no-underline text-gray-900">
+            <div class="relative overflow-hidden rounded-sm">
+                <div class="aspect-square">
                     <img 
                         src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/400' }}" 
-                        class="card-img-top object-fit-cover product-img" 
+                        class="object-cover w-full h-full transition-transform duration-400 ease-in-out group-hover:scale-108" 
                         alt="{{ $product->name }}" 
                         loading="lazy">
+                    <!-- <div class="absolute bottom-0 w-full bg-black/50 text-center py-2 opacity-0 group-hover:opacity-100 md:opacity-0 md:group-hover:opacity-100 sm:opacity-70">
+                        <span class="text-white font-semibold text-sm">Lihat Produk</span>
+                    </div> -->
                 </div>
-
-                <span class="position-absolute top-0 end-0 m-2 badge rounded-pill shadow-sm badge-pink">
-                    {{ $product->category->name ?? 'Umum' }}
-                </span>
             </div>
 
-            <div class="card-body text-center p-3">
-                <h6 class="card-title fw-bold text-dark mb-2 text-truncate" title="{{ $product->name }}">
+            <div class="text-center p-4">            
+                <!-- <span class="font-medium text-gray-900 mb-2 truncate text-sm">
+                    {{ $product->category->name ?? 'Umum' }}
+                </span> -->
+                <h6 class="font-serif font-bold text-pinkColor mb-2 truncate text-2xl" title="{{ $product->name }}">
                     {{ $product->name }}
                 </h6>
-                <p class="mb-2 fw-bold text-pink">
+                <p class="font-sans mb-2 font-medium text-black/80">
                     Rp {{ number_format($product->price, 0, ',', '.') }}
                 </p>
-                <span class="btn btn-sm text-white w-100 rounded-pill shadow-sm hover-button btn-gradient-pink">
-                    <i class="me-1"></i> Detail Produk
-                </span>
+
+              <!-- <span class="block py-2 text-sm text-white text-center rounded-full bg-pinkButton shadow-sm transition-all duration-150 hover:scale-105 hover:shadow-[0_4px_12px_rgba(255,121,176,0.4)]">
+                    Detail Produk
+                </span> -->
             </div>
         </a>
     </div>

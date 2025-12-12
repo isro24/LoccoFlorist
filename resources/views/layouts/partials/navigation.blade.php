@@ -1,55 +1,34 @@
-<header class="header-section">
-  <div class="top-header py-2">
-    <div class="container">
-      <div class="row align-items-center justify-content-between">
-        <div class="col-auto">
-          <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('assets/images/logoNoBg.png') }}" alt="Locco Florist Logo" class="logo-img">
-          </a>
-        </div>
-        <div class="col-auto">
-          <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-whatsapp text-white rounded-pill px-4 d-none d-md-inline-flex align-items-center">
-            <i class="bi bi-whatsapp me-2"></i>
-            <span class="fw-semibold">Hubungi Kami</span>
-          </a>
-          <a href="https://wa.me/6281234567890" target="_blank" class="btn btn-whatsapp-mobile rounded-circle d-md-none d-inline-flex align-items-center justify-content-center">
-            <i class="bi bi-whatsapp"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </div>
+@php
+    $commonLinkClasses = "relative px-3 py-2 rounded-full font-medium transition-colors transition-transform duration-300 ease-in-out
+                          hover:text-[#ff4d94]/80 font-serif text-xl
+                          after:content-[''] after:absolute after:bottom-0 after:left-0 after:right-0 after:mx-auto 
+                          after:h-[3px] after:bg-[#ff4d94] after:w-0 after:rounded-full after:transition-all after:duration-300 ease-in-out
+                          hover:after:w-full";
 
-  <div class="main-header py-1 d-none d-lg-block">
-    <div class="container">
-      <nav class="desktop-menu">
-        <ul class="nav justify-content-center gap-5">
-          <li class="nav-item">
-            <a class="nav-link px-3 py-2 rounded-pill {{ request()->routeIs('home') ? 'active' : '' }}" 
-               href="{{ route('home') }}">
-              Beranda
+    $activeLinkClasses = "text-[#ff4d94] after:w-full";
+    $inactiveLinkClasses = "text-gray-800";
+@endphp
+
+<header class="bg-white shadow-sm sticky lg:top-0 lg:z-50">
+    <div class="container mx-auto px-6 md:px-12 h-[70px] flex items-center max-w-7xl justify-between">
+        
+        <div class="flex items-center ">
+            <a class="navbar-brand" href="{{ route('home') }}">
+                <img src="{{ asset('assets/images/logoNoBg.png') }}" alt="Locco Florist Logo" 
+                     class="h-[50px] w-auto object-contain transition-transform duration-300 ease-in-out hover:scale-105">
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-3 py-2 rounded-pill {{ request()->routeIs('product.catalog*') ? 'active' : '' }}" 
-               href="{{ route('product.catalog') }}">
-              Katalog
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-3 py-2 rounded-pill {{ request()->routeIs('ongkos.kirim') ? 'active' : '' }}" 
-               href="{{ route('ongkos.kirim') }}">
-              Ongkos Kirim
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link px-3 py-2 rounded-pill {{ request()->routeIs('about.us') ? 'active' : '' }}" 
-               href="{{ route('about.us') }}">
-              Tentang Kami
-            </a>
-          </li>
-        </ul>
-      </nav>
+        </div>
+
+        <nav class="hidden lg:flex items-center gap-8 font-serif text-xl">
+            <a class="{{ $commonLinkClasses }} {{ request()->routeIs('home') ? $activeLinkClasses : $inactiveLinkClasses }}" 
+               href="{{ route('home') }}">Beranda</a>
+            <a class="{{ $commonLinkClasses }} {{ request()->routeIs('product.catalog*') ? $activeLinkClasses : $inactiveLinkClasses }}" 
+               href="{{ route('product.catalog') }}">Katalog</a>
+            <a class="{{ $commonLinkClasses }} {{ request()->routeIs('ongkos.kirim') ? $activeLinkClasses : $inactiveLinkClasses }}" 
+               href="{{ route('ongkos.kirim') }}">Ongkos Kirim</a>
+            <a class="{{ $commonLinkClasses }} {{ request()->routeIs('about.us') ? $activeLinkClasses : $inactiveLinkClasses }}" 
+               href="{{ route('about.us') }}">Tentang Kami</a>
+        </nav>
+
     </div>
-  </div>
 </header>

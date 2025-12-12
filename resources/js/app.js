@@ -22,20 +22,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-
-    // Navigation
-    try {
-        const currentUrl = window.location.href.split('?')[0].split('#')[0].replace(/\/$/, "");
-        const navLinks = document.querySelectorAll('.desktop-menu .nav-link, .footnavbar .nav-link');
-        
-        navLinks.forEach(link => {
-            const cleanLinkHref = link.href.split('?')[0].split('#')[0].replace(/\/$/, "");
-            
-            if (cleanLinkHref === currentUrl || (cleanLinkHref + '/public') === currentUrl) {
-                link.classList.add('active');
-            }
-        });
-    } catch (e) {
-        console.error("Error setting active nav link:", e);
-    }
 });

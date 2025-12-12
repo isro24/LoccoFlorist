@@ -57,17 +57,12 @@ class ProductController extends Controller
         return view('customer.catalog', compact('products', 'categories'));
     }
 
-    public function show($id)
+    public function show($slug)
     {
-        $product = Product::with('category')->findOrFail($id);
+        $product = Product::with('category')->where('slug', $slug)->firstOrFail();
 
         if (!$product->status){
-            return redirect()->route('home')
-                ->with('warning', 'Product tidak tersedia');
-        }
-
-        if (!$product || !$product->status) {
-            return redirect()->route('home')->with('warning', 'Produk tidak tersedia.');
+            return redirect()->route('home')->with('warning', 'Product tidak tersedia');
         }
 
         $relatedProducts = Product::where('status', true)
@@ -78,4 +73,5 @@ class ProductController extends Controller
 
         return view('customer.show', compact('product', 'relatedProducts'));
     }
+
 }

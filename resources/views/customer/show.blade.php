@@ -1,77 +1,71 @@
-
 @extends('layouts.guest')
 
 @section('title', $product->name)
 
-@push('styles')
-    @vite(['resources/css/customer/show.css'])
-@endpush
-
 @section('content')
-<div class="bg-page py-5">
-    <div class="container px-4 px-md-5">
-        <div class="mb-4">
+<div class="bg-bgPage py-12">
+    <div class="container mx-auto px-4 md:px-12 max-w-7xl">
+        <div class="mb-6
             <x-breadcrumbs :items="Breadcrumbs::generate('product.show', $product)" />
         </div>
 
-        <div class="row align-items-start justify-content-center g-5" data-aos="fade-up">
-            <div class="col-md-5">
-                <div class="overflow-hidden rounded-2 shadow-sm position-relative zoom-container mb-2">
+        <div class="flex flex-col md:flex-row justify-center gap-12" data-aos="fade-up">
+            <div class="w-full md:w-5/12">
+                <div class="zoom-container overflow-hidden rounded-lg shadow-sm relative group cursor-zoom-in mb-2">
                     <img 
                         src="{{ asset('storage/' . $product->image) }}" 
                         alt="{{ $product->name }}" 
-                        class="img-fluid zoom-image">
+                        class="zoom-image w-full h-auto transition-transform duration-300 ease-out hover:scale-125">
                 </div>
             </div>
 
-            <div class="col-lg-7">
-                <h2 class="fw-bold mb-2">{{ $product->name }}</h2>
-                <p class="text-muted mb-1">{{ $product->category->name ?? 'Tanpa Kategori' }}</p>
-                <h4 class="fw-semibold text-pink mb-4">Rp {{ number_format($product->price, 0, ',', '.') }}</h4>
+            <div class="w-full md:w-7/12">
+                <h2 class="text-4xl font-bold mb-2 font-serif  text-pinkText">{{ $product->name }}</h2>
+                <p class="text-xl text-gray-500 mb-1 font-serif">{{ $product->category->name ?? 'Tanpa Kategori' }}</p>
+                <h4 class="text-2xl font-semibold mb-6">Rp {{ number_format($product->price, 0, ',', '.') }}</h4>
 
-                <ul class="nav nav-tabs product-tabs mb-4" id="productTabs" role="tablist">
-                    <li class="nav-item">
-                        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#description">Deskripsi</button>
-                    </li>
-                </ul>
+                <div class="flex border-b border-gray-200 mb-6" id="productTabs">
+                    <button 
+                        class="py-3 px-6 text-xl md:text-base font-semibold transition-all duration-300 ease-in-out border-b-2 text-pinkText border-pinkColor font-serif" 
+                        data-tab-target="description">Deskripsi</button>
+                </div>
 
-                <div class="tab-content" id="productTabsContent">
-                    <div class="tab-pane fade show active" id="description">
-                        <p class="text-muted text-justify lh-lg">
+                <div id="productTabsContent">
+                    <div id="description" data-tab-content>
+                        <p class="text-gray-600 text-justify leading-relaxed">
                             {!! nl2br(e($product->description)) !!}
                         </p>
                     </div>
+                </div>
 
-                <div class="mt-4">
+                <div class="mt-6">
                     <button type="button" 
-                            class="btn btn-lg btn-whatsapp rounded-pill px-5 shadow-sm text-white" 
-                            data-bs-toggle="modal" 
-                            data-bs-target="#orderModal">
-                        <i class="bi bi-whatsapp me-2"></i> Pesan via WhatsApp
+                            id="openOrderModalBtn"
+                            class="inline-block text-2xl bg-greenColor text-white rounded-full py-3 px-12 shadow-sm transition-all duration-300 ease-in-out hover:bg-[#1da851] hover:-translate-y-0.5 font-serif cursor-pointer">
+                        <i class="bi bi-whatsapp mr-2"></i> Pesan via WhatsApp
                     </button>
                 </div>
             </div>
         </div>
-    </div>
-</div>
 
-@if($relatedProducts->isNotEmpty())
-<div class="container my-5">
-    <h4 class="fw-bold text-start text-pink mb-4">Produk Terkait</h4>
-    <div class="row g-4">
-        @foreach($relatedProducts as $index => $related)
-            <x-customer.product-card :product="$related" :delay="($index * 50)" />
-        @endforeach
+        @if($relatedProducts->isNotEmpty())
+        <div class="container mx-auto px-4 my-12 bg-gray-50">
+            <h4 class="text-3xl font-bold text-left text-pinkText mb-6 font-serif ">Produk Terkait</h4>
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                @foreach($relatedProducts as $index => $related)
+                    <x-customer.product-card :product="$related" :delay="($index * 50)" />
+                @endforeach
+            </div>
+        </div>
+        @endif
     </div>
 </div>
-@endif
 
 @include('customer.partials.order-modal', ['product' => $product])
 
 @push('scripts')
     <script src="{{ Vite::asset('resources/js/customer/show.js') }}"></script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&libraries=places&callback=initMap" async defer></script>  
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.api_key') }}&libraries=places&callback=initMap" async defer></script> 
 @endpush
 
 @endsection

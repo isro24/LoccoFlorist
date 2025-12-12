@@ -11,8 +11,8 @@
         </div>
         <div class="flex flex-row items-stretch gap-2">
             <a href="{{ route('admin.product.create') }}" 
-              class="px-4 py-2 bg-linier-to-r from-pink-400 to-pink-600 text-white rounded-lg hover:opacity-90 transition no-underline">
-                Tambah Produk
+              class="px-4 py-2 bg-pinkButton text-white rounded-lg hover:opacity-80 transition-all no-underline">
+                <i class="bi bi-plus mr-2 text-ms"></i>Tambah Produk
             </a>
         </div>
     </div>
@@ -20,12 +20,21 @@
     <div id="alert-container"></div>
 
     <div id="table-view">
-        @include('admin.product.partials.product-table')
+        @include('admin.product.partials._product-table')
+
+        @if($products->hasPages())
+            <div class="mt-6 flex justify-center pagination-links">
+                {{ $products->links('pagination::tailwind') }}
+            </div>
+        @endif
     </div>
 
 </div>
 
-@include('admin.product.partials.detail-modal')
+@include('admin.product.partials._detail-modal')
+
+<div id="flash-message" 
+     data-success="{{ session('success') ?? '' }}"></div>
 
 @endsection
 

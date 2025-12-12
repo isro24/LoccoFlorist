@@ -2,79 +2,75 @@
 
 @section('title', 'Beranda')
 
-@push('styles')
-    @vite(['resources/css/customer/index.css'])
-@endpush
-
 @section('content')
-<div class="bg-page">
+<div class="bg-bgPage">
 
-    <x-customer.hero-section :imageUrl="asset('assets/images/logo hd.png')" brightness="0.6">
-        
-        <h1 class="display-4 fw-bold mb-3" style="font-family: 'Times New Roman', Times, serif;">
+    <x-customer.hero-section :imageUrl="asset('assets/images/2.jpg')" brightness="0.6"
+                             class="h-[60vh] md:h-[85vh]">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4 font-serif">
             Rangkaian Bunga Eksklusif untuk Setiap Momen Spesial
         </h1>
-        
-        <p class="lead mb-3 fst-italic" style="font-family: 'Times New Roman', Times, serif; font-style: italic;">
-            Menyampaikan Kasih & Makna Melalui Keindahan Alam
-        </p>
-        
-        <p class="mb-4" style="font-family: 'Times New Roman', Times, serif;">
-            Dari buket romantis hingga dekorasi elegan, setiap rangkaian dibuat dengan cinta, detail, dan sentuhan profesional untuk membuat momen Anda tak terlupakan.
-        </p>
-        
         <a href="{{ route('product.catalog') }}" 
-        class="btn btn-gradient-pink btn-lg rounded-pill shadow-sm" 
-        style="font-family: 'Times New Roman', Times, serif;">
+           class="inline-block font-serif text-xl py-3 px-8 rounded-full shadow-sm bg-pinkBg text-white border-none transition-all duration-100 ease-in-out hover:scale-105 hover:shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+           >
             Jelajahi Koleksi Kami
         </a>
-        
-    </x-hero-section>
+    </x-customer.hero-section>
 
-    <div class="container py-5">
-        <x-customer.search-bar 
-            :action="route('product.catalog')" 
-            :value="request('search')" 
-            placeholder="Cari produk..." 
-        />
+    <div class="container mx-auto px-4 py-12 max-w-7xl">
 
-        <div class="row g-4 mb-5">
-            
+        <div class="mx-auto max-w-[600px] pt-5">
+            <x-customer.search-bar 
+                :action="route('product.catalog')" 
+                :value="request('search')" 
+                placeholder="Cari produk..." 
+            />
+        </div>
+
+        <div class="mb-6 text-center" data-aos="fade-up">
+            <h3 class="text-xl md:text-2xl font-semibold text-gray-800">
+                Keunggulan Kami
+            </h3>
+            <p class="text-gray-500 mt-2">
+                Temukan keunggulan kami yang membuat setiap momen lebih berkesan
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <x-customer.feature-card 
                 icon="🌺" 
-                title="Bunga Segar" 
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." 
+                title="Bunga Dekorasi" 
+                description="Rangkaian bunga artificial berkualitas yang cantik dan tahan lama." 
                 delay="0" 
             />
-            
             <x-customer.feature-card 
                 icon="🚚" 
-                title="Pengiriman Cepat" 
-                description="Lorem ipsum dolor sit amet, consectetur adipiscing elit." 
+                title="Layanan Pengiriman" 
+                description="Pengiriman aman di wilayah Jogja." 
                 delay="100" 
             />
-            
             <x-customer.feature-card 
                 icon="💝" 
                 title="Custom Produk" 
-                description="Sesuaikan dengan keinginan Anda." 
+                description="Sesuaikan produk sesuai keinginan Anda." 
                 delay="200" 
             />
-            
         </div>
 
-        <div class="mb-5">
-            <div class="d-flex justify-content-between align-items-center mb-4" data-aos="fade-right">
+
+        <div class="mb-12">
+            <div class="flex justify-between items-center mb-6 font-serif " data-aos="fade-right">
                 <div>
-                    <h2 class="fw-bold text-dark mb-1"><span class="text-pink"></span> Produk Pilihan</h2>
-                    <p class="text-muted mb-0">Koleksi terbaru saat ini</p>
+                    <h2 class="text-4xl font-bold text-gray-900 mb-1">
+                        <span class="text-[#ff79b0]"></span> Produk Pilihan
+                    </h2>
                 </div>
-                <a href="{{ route('product.catalog') }}" class="btn btn-outline-dark rounded-pill d-none d-md-inline-block">
-                    Lihat Semua <i class="bi bi-arrow-right ms-1"></i>
+                <a href="{{ route('product.catalog') }}" class="hidden md:inline-block rounded-full border border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white transition-colors py-2 px-5 text-xl">
+                    Lihat Semua <i class="bi bi-arrow-right ml-1"></i>
                 </a>
             </div>
 
-            <div class="row g-4">
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @forelse($products->take(4) as $index => $product)
                     <x-customer.product-card :product="$product" :delay="$index * 100" />
                 @empty
@@ -89,11 +85,11 @@
             </div>
 
             @if($products->count() > 0)
-            <div class="text-center mt-4 d-md-none" data-aos="fade-up">
-                <a href="{{ route('product.catalog') }}" class="btn btn-dark rounded-pill w-100 max-300px">
-                    Lihat Semua Produk <i class="bi bi-arrow-right ms-1"></i>
-                </a>
-            </div>
+                <div class="text-center mt-6 md:hidden" data-aos="fade-up">
+                    <a href="{{ route('product.catalog') }}" class="inline-block bg-gray-900 text-white hover:bg-gray-800 rounded-full w-full max-w-[350px] py-3 px-5 transition-colors font-serif text-xl leading-none">
+                        Lihat Semua Produk <i class="bi bi-arrow-right ml-1"></i>
+                    </a>
+                </div>
             @endif
         </div>
 
@@ -106,7 +102,6 @@
                 buttonIcon="bi bi-whatsapp"
             />
         @endif
-
     </div>
 </div>
 @endsection

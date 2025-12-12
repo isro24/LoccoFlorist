@@ -5,10 +5,10 @@
     'delay' => 0
 ])
 
-<div class="col-md-4" data-aos="fade-up" data-aos-delay="{{ $delay }}">
-    <div class="card border-0 shadow-sm h-100 hover-lift text-center p-4">
-        <div class="mb-3 fs-1">{{ $icon }}</div>
-        <h5 class="fw-bold mb-2">{{ $title }}</h5>
-        <p class="text-muted small mb-0">{{ $description }}</p>
+<div data-aos="fade-up" data-aos-delay="{{ $delay }}">
+    <div class="border-none shadow-sm h-full text-center p-6 transition-all duration-300 ease-in-out hover:-translate-y-[5px] rounded-lg">
+        <div class="mb-4 text-5xl">{{ $icon }}</div>
+        <h5 class="font-bold mb-2 text-2xl font-serif">{{ $title }}</h5>
+        <p class="text-gray-500 text-sm mb-0 font-sans">{{ $description }}</p>
     </div>
 </div>

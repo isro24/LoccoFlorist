@@ -29,7 +29,7 @@ class ProductController extends Controller
         $categories = Category::all();
 
         if ($request->ajax()) {
-            return view('admin.product.partials.product-table', compact('products'))->render();
+            return view('admin.product.partials._product-table', compact('products'))->render();
         }
 
         return view('admin.product.index', compact('products', 'categories'));
@@ -64,6 +64,8 @@ class ProductController extends Controller
 
         $product = Product::create($validated);
         // $product->load('category');
+
+        $product->update($validated);
 
         return redirect()->route('admin.product.index')->with('success', 'Produk berhasil ditambahkan.');
         // return response()->json(['success' => 'Produk berhasil ditambahkan.', 'product' => $product]);

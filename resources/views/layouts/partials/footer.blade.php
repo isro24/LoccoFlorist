@@ -1,88 +1,90 @@
+<footer class="bg-pinkBg text-white">
+    <div class="container mx-auto px-4 py-12 max-w-7xl font-serif text-xl">
+        <div class="grid grid-cols-12 gap-6">
 
-<footer class="footer-main text-white">
-    <div class="container py-5">
-        <div class="row g-4">
-
-            <div class="col-lg-4 col-md-6">
+            <div class="lg:col-span-4 md:col-span-6 col-span-12">
                 <a href="{{ route('home') }}">
-                    <img src="{{ asset('assets/images/logo hd.png') }}" alt="Locco Florist Logo" class="footer-logo mb-3">
+                    <img src="{{ asset('assets/images/logoNoBg.png') }}" alt="Locco Florist Logo" class="h-[35px] w-auto object-contain rounded-lg mb-4 transition-all duration-200 ease-in-out hover:scale-105 inline-flex">
                 </a>
-                <p class="footer-description opacity-75 mb-3">
+                <p class="leading-[1.7] opacity-75 mb-4">
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
                 </p>
-                <h6 class="fw-bold mb-2">Ikuti Kami</h6>
-                <div class="d-flex gap-2">
-                    <a href="#" class="social-icon-btn btn btn-light btn-sm rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-instagram text-pink"></i>
+                <h6 class="font-bold mb-2">Ikuti Kami</h6>
+                <div class="flex gap-2">
+                    <a href="https://www.instagram.com/locco.florist/" class="w-10 h-10 bg-white rounded-full flex items-center justify-center transition-all duration-200 ease-in-out hover:scale-105 font-sans">
+                        <i class="bi bi-instagram text-darkPinkColor"></i>
                     </a>
-                    <a href="#" class="social-icon-btn btn btn-light btn-sm rounded-circle d-flex align-items-center justify-content-center">
-                        <i class="bi bi-tiktok text-pink"></i>
+                    <a href="https://www.tiktok.com/@locco.florist" class="w-10 h-10 bg-white rounded-full flex items-center justify-center transition-all duration-200 ease-in-out hover:scale-105 font-sans">
+                        <i class="bi bi-tiktok text-darkPinkColor"></i>
                     </a>
                 </div>
             </div>
 
-            <div class="col-lg-2 col-md-6 col-6">
-                <h6 class="fw-bold mb-3">Menu Cepat</h6>
-                <ul class="list-unstyled footer-links">
-                    <li class="mb-2"><a href="{{ route('home') }}" class="text-white text-decoration-none d-flex align-items-center"><i class="bi bi-chevron-right me-1"></i> Beranda</a></li>
-                    <li class="mb-2"><a href="{{ route('product.catalog') }}" class="text-white text-decoration-none d-flex align-items-center"><i class="bi bi-chevron-right me-1"></i> Katalog</a></li>
-                    <li class="mb-2"><a href="{{ route('about.us') }}" class="text-white text-decoration-none d-flex align-items-center"><i class="bi bi-chevron-right me-1"></i> Tentang Kami</a></li>
-                    <li class="mb-2"><a href="{{ route('ongkos.kirim') }}" class="text-white text-decoration-none d-flex align-items-center"><i class="bi bi-chevron-right me-1"></i> Ongkos Kirim</a></li>
+            <div class="lg:col-span-2 md:col-span-6 col-span-6 mb-6 md:mb-0">
+                <h6 class="font-bold mb-4">Menu Cepat</h6>
+                <ul class="space-y-2">
+                    <li><a href="{{ route('home') }}" class="text-white no-underline inline-flex items-center transition-all duration-200 ease-in-out opacity-90 hover:pl-[5px] hover:opacity-100"><i class="bi bi-chevron-right mr-1"></i> Beranda</a></li>
+                    <li><a href="{{ route('product.catalog') }}" class="text-white no-underline inline-flex items-center transition-all duration-200 ease-in-out opacity-90 hover:pl-[5px] hover:opacity-100"><i class="bi bi-chevron-right mr-1"></i> Katalog</a></li>
+                    <li><a href="{{ route('about.us') }}" class="text-white no-underline inline-flex items-center transition-all duration-200 ease-in-out opacity-90 hover:pl-[5px] hover:opacity-100"><i class="bi bi-chevron-right mr-1"></i> Tentang Kami</a></li>
+                    <li><a href="{{ route('ongkos.kirim') }}" class="text-white no-underline inline-flex items-center transition-all duration-200 ease-in-out opacity-90 hover:pl-[5px] hover:opacity-100"><i class="bi bi-chevron-right mr-1"></i> Ongkos Kirim</a></li>
                 </ul>
             </div>
 
-            <div class="col-lg-3 col-md-6 col-6">
-                <h6 class="fw-bold mb-3">Kategori Produk</h6>
-                <ul class="list-unstyled footer-links">
+            <div class="lg:col-span-3 md:col-span-6 col-span-6 mb-6 md:mb-0">
+                <h6 class="font-bold mb-4">Kategori Produk</h6>
+                <ul class="space-y-2">
                     @forelse ($categories as $category)
-                        <li class="mb-2">
-                            <a href="{{ route('product.catalog', ['category' => $category->name]) }}" class="text-white text-decoration-none d-flex align-items-center">
-                                <i class="bi bi-chevron-right me-1"></i> {{ $category->name }}
+                        <li>
+                            <a href="{{ route('product.catalog', ['category' => $category->name]) }}" class="text-white no-underline inline-flex items-center transition-all duration-200 ease-in-out opacity-90 hover:pl-[5px] hover:opacity-100">
+                                <i class="bi bi-chevron-right mr-1"></i> {{ $category->name }}
                             </a>
                         </li>
                     @empty
-                        <li class="mb-2"><span class="opacity-75">Belum ada kategori.</span></li>
+                        <li class="mb-2"><span class="opacity-75">Belum ada kategori</span></li>
                     @endforelse
                 </ul>
             </div>
 
-            <div class="col-lg-3 col-md-6">
-                <h6 class="fw-bold mb-3">Hubungi Kami</h6>
-                <ul class="list-unstyled footer-links">
-                    <li class="mb-3 d-flex align-items-start">
-                        <i class="bi bi-telephone-fill me-2 mt-1"></i>
-                        <div>
-                            <a href="tel:+6281234567890" class="text-white text-decoration-none d-block">+62 812-3456-7890</a>
-                            <small class="opacity-75">Senin - Minggu: 08.00 - 20.00</small>
+           <div class="lg:col-span-3 md:col-span-6 col-span-12">
+            <h6 class="font-bold mb-4">Hubungi Kami</h6>
+                <ul class="space-y-4">
+                    <li class="flex items-start gap-2">
+                        <i class="bi bi-whatsapp mt-1"></i>
+                        <div class="flex flex-col">
+                            <a href="https://wa.me/6281234567890" 
+                            target="_blank"
+                            class="text-white no-underline transition-all duration-200 ease-in-out opacity-90 hover:opacity-100">
+                                Chat WhatsApp
+                            </a>
+                            <small class="opacity-75">
+                                Senin - Minggu: 08.00 - 23.00
+                            </small>
                         </div>
-                    </li>
-                    <li class="mb-3 d-flex align-items-center">
-                        <i class="bi bi-envelope-fill me-2"></i>
-                        <a href="mailto:info@loccoflorist.com" class="text-white text-decoration-none">info@loccoflorist.com</a>
-                    </li>
-                    <li class="d-flex align-items-center">
-                        <i class="bi bi-whatsapp me-2"></i>
-                        <a href="https://wa.me/6281234567890" target="_blank" class="text-white text-decoration-none">Chat WhatsApp</a>
                     </li>
                 </ul>
             </div>
+
         </div>
 
-        <div class="row mt-4 pt-4 border-top border-white border-opacity-25">
-            <div class="col-lg-6">
-                <h6 class="fw-bold mb-3">Metode Pembayaran</h6>
-                <div class="d-flex flex-wrap gap-2">
-                    <div class="bg-white rounded px-3 py-2">
-                        <img src="{{ asset('assets/images/bca.png') }}" alt="BCA" class="payment-logo">
+        <div class="grid grid-cols-12 gap-6 mt-6 pt-6 border-t border-white/25">
+            <div class="lg:col-span-6 col-span-12">
+                <h6 class="font-bold mb-4">Metode Pembayaran</h6>
+
+                <div class="flex flex-col gap-2">
+                    <div class="bg-white rounded-md px-3 py-2 transition-all duration-200 ease-in-out hover:scale-105 w-fit">
+                        <img src="{{ asset('assets/images/bca.png') }}" alt="BCA" class="h-6 w-auto object-contain">
                     </div>
+
+                    <h1 class="text-sm font-sans">4452723321</h1>
+                    <p class="text-sm opacity-90">An. Khusnul Mandala W</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="border-top border-white border-opacity-25">
-        <div class="container py-3 text-center">
-            <p class="mb-0 opacity-90 small">&copy; {{ date('Y') }} <strong>Locco Florist</strong>. All Rights Reserved.</p>
+    <div class="border-t border-white/25">
+        <div class="container mx-auto px-4 py-4 text-center">
+            <p class="mb-0 opacity-90 text-sm">&copy; {{ date('Y') }} <strong>Locco Florist</strong>. All Rights Reserved.</p>
         </div>
     </div>
 </footer>

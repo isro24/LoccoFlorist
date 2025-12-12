@@ -8,6 +8,7 @@ $(document).ready(function() {
 
     const isMobile = () => window.innerWidth < 992;
 
+    // Toggle sidebar mobile
     sidebarToggle.on('click', function() {
         if (isMobile()) {
             sidebar.toggleClass('-translate-x-full');
@@ -26,31 +27,7 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('click', function(e) {
-        if (isMobile() && !$(e.target).closest('#sidebar, #sidebar-toggle, #close-sidebar-btn').length) {
-            sidebar.addClass('-translate-x-full');
-            closeBtn.addClass('hidden');
-        }
-    });
-
-    $(window).on('resize', function() {
-        if (isMobile()) {
-            sidebar.addClass('-translate-x-full');
-            closeBtn.addClass('hidden');
-        } else {
-            sidebar.removeClass('-translate-x-full');
-            closeBtn.addClass('hidden');
-        }
-    });
-
-    if (isMobile()) {
-        sidebar.addClass('-translate-x-full');
-        closeBtn.addClass('hidden');
-    } else {
-        sidebar.removeClass('-translate-x-full');
-        closeBtn.addClass('hidden');
-    }
-
+    // Logout Confirmation 
     $('#logout-btn').on('click', function(e) {
         e.preventDefault();
         Swal.fire({
@@ -67,77 +44,58 @@ $(document).ready(function() {
         });
     });
 
-    function toggleClearBtn() {
-        if (searchInput.val().trim() !== '') {
-            clearBtn.removeClass('hidden');
-        } else {
-            clearBtn.addClass('hidden');
+    // Search clear button
+    function setupClearSearch(inputSelector, clearBtnSelector, formSelector) {
+        const input = $(inputSelector);
+        const clearBtn = $(clearBtnSelector);
+        const form = $(formSelector);
+
+        function toggleBtn() {
+            clearBtn.toggleClass('hidden', input.val().trim() === '');
         }
-    }
 
-    searchInput.on('input', toggleClearBtn);
+        input.on('input', toggleBtn);
 
-    clearBtn.on('click', function() {
-        searchInput.val('').focus();
-        toggleClearBtn();
-        $('#searchForm').submit();
-    });
-
-    toggleClearBtn();
-
-    function removeAllTooltips() {
-        $('#sidebar .nav-link, #logout-btn').each(function() {
-            const $el = $(this);
-            if ($el.data('bs.tooltip')) $el.tooltip('dispose');
-            $el.removeAttr('title data-bs-original-title');
+        clearBtn.on('click', function() {
+            input.val('');
+            toggleBtn();
+            form.submit();
         });
+
+        toggleBtn(); 
     }
 
-    function updateTooltips() {
-        const isCollapsed = wrapper.hasClass('sidebar-collapsed') && !isMobile();
-        removeAllTooltips();
+    // Desktop search
+    setupClearSearch('#searchInput', '#clearSearch', '#searchForm');
 
-        if (isCollapsed) {
-            $('#sidebar .nav-link').each(function() {
-                const text = $(this).find('.nav-text').text().trim();
-                if (text) {
-                    $(this).tooltip({
-                        title: text,
-                        placement: 'right',
-                        trigger: 'hover',
-                        delay: { show: 300, hide: 100 }
-                    });
-                }
-            });
+    // Mobile search
+    setupClearSearch('#mobileSearchInput', '#mobileClearSearch', '#mobileSearchForm');
 
-            $('#logout-btn').tooltip({
-                title: 'Logout',
-                placement: 'right',
-                trigger: 'hover',
-                delay: { show: 300, hide: 100 }
-            });
-        }
-    }
+    // Toggle mobile search dropdown
+    const mobileSearchDropdown = $('#mobile-search-dropdown');
+    $('#mobile-search-btn').on('click', function(e) {
+        e.stopPropagation();
+        mobileSearchDropdown.toggleClass('opacity-0 invisible translate-y-0 -translate-y-2 opacity-100 visible');
+    });
 
-    updateTooltips();
-
-    $('#sidebar-toggle-desktop').on('click', function() {
-        if (!isMobile()) {
-            wrapper.toggleClass('sidebar-collapsed');
-            updateTooltips();
+    $(document).on('click', function(e) {
+        if (!$('#mobile-search-btn').is(e.target) && $('#mobile-search-btn').has(e.target).length === 0 &&
+            !mobileSearchDropdown.is(e.target) && mobileSearchDropdown.has(e.target).length === 0) {
+            mobileSearchDropdown.addClass('opacity-0 invisible -translate-y-2')
+                                .removeClass('opacity-100 visible translate-y-0');
         }
     });
 
+    // Profile dropdown
     const profileBtn = $('.profile-initial-circle');
     const profileDropdown = profileBtn.next('ul');
 
     profileBtn.on('click', function(e) {
-        e.stopPropagation(); 
+        e.stopPropagation();
         profileDropdown.toggleClass('hidden');
     });
 
     $(document).on('click', function() {
         profileDropdown.addClass('hidden');
     });
-
 });

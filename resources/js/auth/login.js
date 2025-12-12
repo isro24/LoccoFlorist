@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.auto-dismiss-alert').forEach(alert => {
         setTimeout(() => {
-            alert.classList.add('opacity-0', 'transition-opacity', 'duration-500'); // fade out
+            alert.classList.add('opacity-0', 'transition-opacity', 'duration-500'); 
             setTimeout(() => alert.remove(), 500);
         }, 3000);
     });
@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Validasi
     form.addEventListener('submit', (e) => {
         let valid = true;
         emailError.textContent = '';
@@ -52,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showError(emailError, 'Mohon masukkan email');
             valid = false;
         } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-            showError(emailError, 'Format email tidak valid, contoh: nama@email.com');
+            showError(emailError, 'Format email tidak valid, contoh: nama@gmail.com');
             valid = false;
         }
 
@@ -71,3 +72,47 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Lockout countdown
+const lockoutBox = document.getElementById("lockoutBox");
+
+if (lockoutBox) {
+    let remaining = parseInt(lockoutBox.dataset.remaining, 10);
+    const timerEl = document.getElementById("lockoutTimer");
+
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("emailInput");
+    const passwordInputField = document.getElementById("passwordInput");
+    const submitBtn = form.querySelector("button[type=submit]");
+
+    emailInput.disabled = true;
+    passwordInputField.disabled = true;
+    submitBtn.disabled = true;
+
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return m > 0 ? `${m} menit ${s} detik` : `${s} detik`;
+    }
+
+    timerEl.textContent = formatTime(remaining);
+
+    const countdown = setInterval(() => {
+        remaining--;
+
+        if (remaining <= 0) {
+            clearInterval(countdown);
+
+            emailInput.disabled = false;
+            passwordInputField.disabled = false;
+            submitBtn.disabled = false;
+
+            lockoutBox.classList.add("opacity-0", "transition", "duration-500");
+            setTimeout(() => lockoutBox.remove(), 600);
+
+            return;
+        }
+
+        timerEl.textContent = formatTime(remaining);
+    }, 1000);
+}

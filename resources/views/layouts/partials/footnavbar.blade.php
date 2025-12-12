@@ -1,28 +1,45 @@
-<nav class="footnavbar d-lg-none">
-    <ul class="nav w-100">
-        <li class="nav-item flex-fill">
-            <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ route('home') }}">
-                <i class="bi bi-house-door"></i>
+@php
+    $mobileLinkClasses = "
+        flex flex-col items-center justify-center py-2 px-2.5 
+        text-[#2e2d2d] font-medium text-center font-serif text-xl
+        transition-colors duration-200 ease-in-out 
+        hover:text-pinkText
+    ";
+@endphp
+<nav class="lg:hidden fixed bottom-0 left-0 w-full rounded-t-xl bg-white border-t border-black/10 z-1000">
+    <ul class="flex w-full font-serif text-xl">
+
+        <li class="flex-1">
+            <a href="{{ route('home') }}"
+               class="{{ $mobileLinkClasses }} {{ request()->routeIs('home') ? 'text-pinkText' : '' }}">
+                <i class="bi bi-house-door text-2xl mb-0.5"></i>
                 <span>Beranda</span>
             </a>
         </li>
-        <li class="nav-item flex-fill">
-            <a class="nav-link {{ request()->routeIs('product.catalog') ? 'active' : '' }}" href="{{ route('product.catalog') }}">
-                <i class="bi bi-view-list"></i>
+
+        <li class="flex-1">
+            <a href="{{ route('product.catalog') }}"
+               class="{{ $mobileLinkClasses }} {{ request()->routeIs('product.catalog') ? 'text-pinkText' : '' }}">
+                <i class="bi bi-view-list text-2xl mb-0.5"></i>
                 <span>Katalog</span>
             </a>
         </li>
-        <li class="nav-item flex-fill">
-            <a class="nav-link {{ request()->routeIs('ongkos.kirim') ? 'active' : '' }}" href="{{ route('ongkos.kirim') }}">
-                <i class="bi bi-truck"></i>
-                <span>Cek Ongkir</span>
+
+        <li class="flex-1">
+            <a href="{{ route('ongkos.kirim') }}"
+               class="{{ $mobileLinkClasses }} {{ request()->routeIs('ongkos.kirim') ? 'text-pinkText' : '' }}">
+                <i class="bi bi-truck text-2xl mb-0.5"></i>
+                <span>Ongkir</span>
             </a>
         </li>
-        <li class="nav-item flex-fill">
-            <a class="nav-link {{ request()->routeIs('about.us') ? 'active' : '' }}" href="{{ route('about.us') }}">
-                <i class="bi bi-info-circle"></i>
+
+        <li class="flex-1">
+            <a href="{{ route('about.us') }}"
+               class="{{ $mobileLinkClasses }} {{ request()->routeIs('about.us') ? 'text-pinkText' : '' }}">
+                <i class="bi bi-info-circle text-2xl mb-0.5"></i>
                 <span>Tentang</span>
             </a>
         </li>
+
     </ul>
 </nav>

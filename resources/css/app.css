@@ -1,24 +1,111 @@
 
 /* @tailwind base;
 @tailwind components; */
-@tailwind utilities;
+/* @tailwind utilities; */
 
 @import "tailwindcss";
+@plugin "@tailwindcss/forms";
 
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-bgPage: #f7fafc;
+
+
+    --font-serif: "Cormorant Garamond", serif;
+    --font-sans: "Inter", sans-serif;
+
 
     --color-loginBg: #f0cad9;
-    --color-sidebarColor: #ff79b0;
-    --color-textPink: #ff79b0;
-    --color-pinkBg: #ff79b0;
+    --color-sidebarColor: #ff4d94;
+    --color-pinkText: #ff79b0;
+    --color-pinkButton: #ff4d94;
+    --color-textForm: #ff79b0;
 
+    --color-darkPinkColor: #d81b60;
+
+    --color-pinkColor: #ff79b0;
+    --color-greenColor: #4caf50;
+    --color-yellowColor: #eab308;
+    --color-blueColor: #2196f3;
+    --color-redColor: #f44336;
+
+    --color-lightPinkBg: #fce4ec;    
+    --color-lightGreenBg: #dcedc8;   
+    --color-lightYellowBg: #fff9c4;  
+    --color-lightBlueBg: #bbdefb; 
+    --color-lightRedBg: #fecaca;
+
+    --color-pinkBg: #ff4d94;
+
+    --color-greenBg: #4caf50;
+    --color-yellowBg: #eab308;
+    --color-blueBg: #2196f3;
+    --color-redBg: #ef4444;
+    --color-tealBg: #14b8a6;
+    --color-grayBg: #9ca3af;
+
+    --color-theadPink: #ff4d94;
+    
 }
 
-@import "./base/style.css";
+@layer components {
+    
+    .page-link {
+        @apply border-2 border-[#ffe4ef] text-[#ff79b0] font-semibold rounded-xl bg-white transition-all duration-300 ease-in-out;
+    }
+    
+    .page-link:hover {
+        @apply bg-[#ff79b0] text-white border-[#ff79b0] -translate-y-[3px];
+    }
+    
+    .page-item.active .page-link {
+        @apply bg-[#ff4d94] border-[#ff4d94] text-white;
+    }
 
-@import "./layouts/footer.css";
-@import "./layouts/navigation.css";
-@import "./layouts/footnavbar.css";
+    .product-tabs .nav-link.active {
+        @apply text-[#ff4b8b] border-b-[#ff4b8b];
+    }
+    .product-tabs .nav-link:not(.active):hover {
+        @apply border-b-gray-300;
+    }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input.no-spin::-webkit-outer-spin-button,
+input.no-spin::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input.no-spin[type=number] {
+    -moz-appearance: textfield;
+}
+
+
+::-webkit-scrollbar {
+    width: 6px;               
+    height: 6px;              
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;  
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.25); 
+    border-radius: 9999px;    
+    border: 2px solid transparent; 
+    background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0,0,0,0.4);
+}
+
+html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0,0,0,0.25) transparent;
+}

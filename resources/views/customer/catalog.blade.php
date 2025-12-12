@@ -2,41 +2,19 @@
 
 @section('title', 'Katalog Produk')
 
-@push('styles')
-    @vite(['resources/css/customer/catalog.css'])
-@endpush
-
 @section('content')
-<div class="bg-page">
-    <div class="container py-5">
+<div class="bg-bgPage">
+    
+    <div class="container mx-auto px-4 py-12 max-w-7xl">
+        <div class="text-center mb-12 font-serif" data-aos="fade-up">
+            <h2 class="text-5xl font-bold text-gray-900 mb-3">Kolekasi Kami</h2>
+            <p class="text-gray-500 text-xl">
+                Temukan bunga, papan ucapan, dan buket pilihan untuk setiap momen spesial Anda
+            </p>
+        </div>
 
-        <!-- <section class="hero-section position-relative text-white">
-            <img 
-                src="{{ asset('assets/images/bgHome.png') }}" 
-                alt="Hero Background" 
-                class="bg-hero position-absolute top-0 start-0 w-100 h-100 object-fit-cover" 
-                loading="lazy"
-                style="object-fit: cover; filter: brightness(0.6);"
-            >
-
-            <div class="container position-relative py-5">
-                <div class="row justify-content-center text-center">
-                    <div class="col-lg-8">
-                        <h1 class="display-4 fw-bold mb-3" data-aos="fade-up">Locco</h1>
-                        <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-                        </p>
-                        <a href="{{ route('product.catalog') }}" 
-                        class="btn btn-pink-gradient btn-lg rounded-pill shadow-sm" 
-                        data-aos="fade-up" data-aos-delay="200">
-                            Lihat Produk
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-        <div class="text-center mb-4" data-aos="fade-up">
-            <div class="mx-auto" style="max-width: 600px;">
+        <div class="text-center mb-6" data-aos="fade-up">
+            <div class="mx-auto max-w-[600px]">
                 <x-customer.search-bar 
                     :action="route('product.catalog')" 
                     :value="request('search')" 
@@ -45,41 +23,40 @@
             </div>
         </div>
 
-        <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-2" data-aos="fade-up">
-
-            <div class="rounded-pill px-4 py-2">
-                <span class="text-muted small">
-                    Menampilkan 
-                    <strong class="text-dark">{{ $products->firstItem() ?? 0 }}–{{ $products->lastItem() ?? 0 }}</strong> 
-                    dari <strong class="text-dark">{{ $products->total() }}</strong> produk
-                </span>
-            </div>
-
-            <button class="btn btn-outline-dark d-md-none rounded-pill px-4 py-2" 
-                    type="button" data-bs-toggle="offcanvas" data-bs-target="#filterSidebar">
+        <div class="flex flex-wrap justify-end md:justify-between items-center mb-6 gap-2" data-aos="fade-up">
+            <button class="md:hidden rounded-full border border-gray-900 px-6 py-2 text-gray-900 transition-colors hover:bg-gray-900 hover:text-white font-serif text-xl cursor-pointer" 
+                    type="button" 
+                    id="openFilterSidebarBtn">
                 <i class="bi bi-funnel"></i> Filter
             </button>
 
             <form action="{{ route('product.catalog') }}" method="GET" 
-                class="d-none d-md-flex align-items-center gap-2">
+                  class="hidden md:flex items-center gap-2">
                 <input type="hidden" name="search" value="{{ request('search') }}">
-
                 <x-customer.product-filters :categories="$categories" layout="desktop" />
-
             </form>
         </div>
+        
+        <div id="filterSidebarBackdrop"
+             class="fixed inset-0 bg-black/50 z-30 hidden opacity-0 transition-opacity duration-300 ease-in-out">
+        </div>
 
-        <div class="offcanvas offcanvas-end floral-offcanvas" tabindex="-1" id="filterSidebar">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title text-white">Filter Produk</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"></button>
+        <div id="filterSidebar" tabindex="-1"
+             class="fixed top-0 right-0 z-40 h-full w-full max-w-sm bg-white shadow-xl 
+                    transform transition-transform duration-300 ease-in-out translate-x-full">
+            
+            <div class="flex items-center justify-between bg-[#ff4d94] text-white px-5 py-4">
+                <h5 class="font-semibold text-white text-xl font-serif">Filter Produk</h5>
+                <button type="button" id="closeFilterSidebarBtn" 
+                        class="text-white opacity-100 focus:ring-0">
+                    <i class="bi bi-x text-2xl cursor-pointer"></i>
+                </button>
             </div>
-            <div class="offcanvas-body">
+            
+            <div class="p-6">
                 <form action="{{ route('product.catalog') }}" method="GET">
                     <input type="hidden" name="search" value="{{ request('search') }}">
-
                     <x-customer.product-filters :categories="$categories" layout="mobile" />
-
                 </form>
             </div>
         </div>
@@ -106,15 +83,15 @@
                     message="Belum ada produk yang ditambahkan ke katalog. Silakan cek kembali nanti." />
             @endif
         @else
-            <div class="row g-4">
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @foreach($products as $index => $product)
                     <x-customer.product-card :product="$product" :delay="($index % 3) * 50" />
                 @endforeach
             </div>
 
             @if($products->hasPages())
-                <div class="mt-5 d-flex justify-content-center" data-aos="fade-up">
-                    {{ $products->links('pagination::bootstrap-5') }}
+                <div class="mt-12 flex justify-center" data-aos="fade-up">
+                    {{ $products->links('pagination::tailwind') }}
                 </div>
             @endif
         @endif

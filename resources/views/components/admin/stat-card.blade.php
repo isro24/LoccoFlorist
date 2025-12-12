@@ -2,10 +2,10 @@
 
 @php
 $colors = [
-    'primary' => ['bg' => 'bg-pink-500', 'text' => 'text-pink-500', 'bgBadge' => 'bg-pink-100'],
-    'success' => ['bg' => 'bg-green-500', 'text' => 'text-green-500', 'bgBadge' => 'bg-green-100'],
-    'warning' => ['bg' => 'bg-yellow-500', 'text' => 'text-yellow-500', 'bgBadge' => 'bg-yellow-100'],
-    'info' => ['bg' => 'bg-blue-500', 'text' => 'text-blue-500', 'bgBadge' => 'bg-blue-100'],
+    'primary' => ['bg' => 'bg-pinkBg', 'text' => 'text-pinkColor', 'bgBadge' => 'bg-lightPinkBg'],
+    'success' => ['bg' => 'bg-greenBg', 'text' => 'text-greenColor', 'bgBadge' => 'bg-lightGreenBg'],
+    'warning' => ['bg' => 'bg-yellowBg', 'text' => 'text-yellowColor', 'bgBadge' => 'bg-lightYellowBg'],
+    'info' => ['bg' => 'bg-blueBg', 'text' => 'text-blueColor', 'bgBadge' => 'bg-lightBlueBg'],
 ];
 $colorClass = $colors[$color] ?? $colors['primary'];
 @endphp
