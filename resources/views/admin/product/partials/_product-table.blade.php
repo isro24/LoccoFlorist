@@ -10,6 +10,7 @@
                         <th class="py-3 px-4 text-sm font-semibold uppercase tracking-wide">Kategori</th>
                         <th class="py-3 px-4 text-sm font-semibold uppercase tracking-wide">Harga</th>
                         <th class="py-3 px-4 text-sm font-semibold uppercase tracking-wide">Status</th>
+                        <th class="py-3 px-4 text-sm font-semibold uppercase tracking-wide">Best Seller</th>
                         <th class="py-3 px-4 text-sm font-semibold uppercase tracking-wide">Aksi</th>
                     </tr>
                 </thead>
@@ -39,6 +40,14 @@
                                         <i class="bi bi-x-circle-fill text-base"></i> Tidak Tersedia
                                     </span>
                                 @endif
+                            </td>
+                            <td class="py-3 px-4">
+                                <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" class="sr-only peer toggle-best-seller" 
+                                           data-id="{{ $product->id }}" 
+                                           {{ $product->is_best_seller ? 'checked' : '' }}>
+                                    <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-pink-500"></div>
+                                </label>
                             </td>
                             <td class="py-3 px-4">
                                 <div class="flex gap-1 justify-center flex-nowrap">
@@ -102,16 +111,20 @@
                     <p class="text-[10px] text-gray-600 mb-1">{{ $product->category->name ?? '-' }}</p>
                     <p class="font-semibold mb-2 text-xs">Rp {{ number_format($product->price, 0, ',', '.') }}</p>
 
-                    <div class="mb-2">
+                    <div class="flex justify-between items-center mb-2 bg-gray-50 p-1 rounded">
                         @if($product->status)
-                            <span class="inline-flex items-center gap-1 bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full text-[9px] font-medium">
-                                <i class="bi bi-check-circle-fill"></i> Tersedia
-                            </span>
+                            <span class="text-[9px] text-green-700 font-medium flex items-center gap-1"><i class="bi bi-check-circle-fill"></i> Ada</span>
                         @else
-                            <span class="inline-flex items-center gap-1 bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded-full text-[9px] font-medium">
-                                <i class="bi bi-x-circle-fill"></i> Kosong
-                            </span>
+                            <span class="text-[9px] text-gray-600 font-medium flex items-center gap-1"><i class="bi bi-x-circle-fill"></i> Kosong</span>
                         @endif
+
+                        <label class="inline-flex items-center cursor-pointer scale-75 origin-right" title="Jadikan Best Seller">
+                            <input type="checkbox" class="sr-only peer toggle-best-seller" 
+                                   data-id="{{ $product->id }}" 
+                                   {{ $product->is_best_seller ? 'checked' : '' }}>
+                            <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-pink-500"></div>
+                            <span class="ms-1 text-[10px] text-gray-500 peer-checked:text-pink-600 font-bold"><i class="bi bi-star-fill"></i></span>
+                        </label>
                     </div>
 
                     <div class="flex gap-1">

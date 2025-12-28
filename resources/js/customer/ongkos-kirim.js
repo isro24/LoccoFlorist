@@ -8,10 +8,10 @@ document.getElementById("cekTarifBtn").addEventListener("click", () => {
         return;
     }
 
-    // Update tampilan
     document.getElementById("outputArea").textContent = area;
-    document.getElementById("outputOngkir").textContent = 
-        formatRupiah(parseInt(ongkir));
+    document.getElementById("outputOngkir").textContent = formatRupiah(
+        parseInt(ongkir)
+    );
 
     showOutput();
 });
@@ -20,7 +20,6 @@ function showOutput() {
     const box = document.getElementById("output");
     box.classList.remove("hidden");
 
-    // Animasi muncul
     setTimeout(() => {
         box.classList.add("opacity-100", "translate-y-0");
         box.classList.remove("opacity-0", "translate-y-3");
@@ -31,6 +30,6 @@ function formatRupiah(value) {
     return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
-        minimumFractionDigits: 0
+        minimumFractionDigits: 0,
     }).format(value);
 }

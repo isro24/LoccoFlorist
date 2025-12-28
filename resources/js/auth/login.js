@@ -1,64 +1,65 @@
-document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('.auto-dismiss-alert').forEach(alert => {
+document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".auto-dismiss-alert").forEach((alert) => {
         setTimeout(() => {
-            alert.classList.add('opacity-0', 'transition-opacity', 'duration-500'); 
+            alert.classList.add(
+                "opacity-0",
+                "transition-opacity",
+                "duration-500"
+            );
             setTimeout(() => alert.remove(), 500);
         }, 3000);
     });
 
-    const toggleIcon = document.getElementById('togglePasswordIcon');
-    const passwordInput = document.getElementById('passwordInput');
+    const toggleIcon = document.getElementById("togglePasswordIcon");
+    const passwordInput = document.getElementById("passwordInput");
 
     if (toggleIcon && passwordInput) {
-        toggleIcon.addEventListener('click', () => {
-            const isPassword = passwordInput.type === 'password';
-            passwordInput.type = isPassword ? 'text' : 'password';
-            toggleIcon.classList.toggle('bi-eye');
-            toggleIcon.classList.toggle('bi-eye-slash');
+        toggleIcon.addEventListener("click", () => {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+            toggleIcon.classList.toggle("bi-eye");
+            toggleIcon.classList.toggle("bi-eye-slash");
         });
     }
 
-    const form = document.getElementById('loginForm');
-    const emailInput = document.getElementById('emailInput');
-    const passwordInputField = document.getElementById('passwordInput');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
+    const form = document.getElementById("loginForm");
+    const emailInput = document.getElementById("emailInput");
+    const passwordInputField = document.getElementById("passwordInput");
+    const emailError = document.getElementById("emailError");
+    const passwordError = document.getElementById("passwordError");
 
     const showError = (el, message) => {
         el.textContent = message;
-        el.classList.remove('opacity-0'); 
-        el.classList.add('transition-opacity', 'duration-300', 'opacity-100');
+        el.classList.remove("opacity-0");
+        el.classList.add("transition-opacity", "duration-300", "opacity-100");
     };
 
     const hideError = (el) => {
-        if (el.textContent !== '') {
-            el.classList.remove('opacity-100');
-            el.classList.add('opacity-0');
+        if (el.textContent !== "") {
+            el.classList.remove("opacity-100");
+            el.classList.add("opacity-0");
             setTimeout(() => {
-                el.textContent = '';
+                el.textContent = "";
             }, 300);
         }
     };
 
     // Validasi
-    form.addEventListener('submit', (e) => {
+    form.addEventListener("submit", (e) => {
         let valid = true;
-        emailError.textContent = '';
-        passwordError.textContent = '';
+        emailError.textContent = "";
+        passwordError.textContent = "";
 
         const emailValue = emailInput.value.trim();
         const passwordValue = passwordInputField.value.trim();
 
         if (!emailValue) {
-            showError(emailError, 'Mohon masukkan email');
-            valid = false;
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
-            showError(emailError, 'Format email tidak valid, contoh: nama@gmail.com');
+            showError(emailError, "Mohon masukkan email");
             valid = false;
         }
 
         if (!passwordValue) {
-            showError(passwordError, 'Mohon masukkan password');
+            showError(passwordError, "Mohon masukkan password");
             valid = false;
         }
 
@@ -66,53 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     [emailInput, passwordInputField].forEach((input) => {
-        input.addEventListener('input', () => {
+        input.addEventListener("input", () => {
             const errorEl = input === emailInput ? emailError : passwordError;
             hideError(errorEl);
         });
     });
 });
-
-// Lockout countdown
-const lockoutBox = document.getElementById("lockoutBox");
-
-if (lockoutBox) {
-    let remaining = parseInt(lockoutBox.dataset.remaining, 10);
-    const timerEl = document.getElementById("lockoutTimer");
-
-    const form = document.getElementById("loginForm");
-    const emailInput = document.getElementById("emailInput");
-    const passwordInputField = document.getElementById("passwordInput");
-    const submitBtn = form.querySelector("button[type=submit]");
-
-    emailInput.disabled = true;
-    passwordInputField.disabled = true;
-    submitBtn.disabled = true;
-
-    function formatTime(sec) {
-        const m = Math.floor(sec / 60);
-        const s = sec % 60;
-        return m > 0 ? `${m} menit ${s} detik` : `${s} detik`;
-    }
-
-    timerEl.textContent = formatTime(remaining);
-
-    const countdown = setInterval(() => {
-        remaining--;
-
-        if (remaining <= 0) {
-            clearInterval(countdown);
-
-            emailInput.disabled = false;
-            passwordInputField.disabled = false;
-            submitBtn.disabled = false;
-
-            lockoutBox.classList.add("opacity-0", "transition", "duration-500");
-            setTimeout(() => lockoutBox.remove(), 600);
-
-            return;
-        }
-
-        timerEl.textContent = formatTime(remaining);
-    }, 1000);
-}

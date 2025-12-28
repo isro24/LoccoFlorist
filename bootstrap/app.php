@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Middleware\NoCache;
+use App\Http\Middleware\AdminOnly;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -11,7 +13,15 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'no-cache' => NoCache::class,
+            'admin-only' => AdminOnly::class,
+        ]);
+
+        $middleware->redirectTo(
+            guests: '/admin/login',
+            users: '/admin/dashboard'
+        );
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

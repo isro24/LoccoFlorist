@@ -16,7 +16,8 @@ class Product extends Model
         'price',
         'image',
         'status',
-        'user_id',
+        'is_best_seller',
+        'admin_id',
         'category_id',
         'slug'
     ];
@@ -26,9 +27,14 @@ class Product extends Model
         return $this->belongsTo(Category ::class);
     }
 
-    public function user()
+    public function admin()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Admin::class, 'admin_id');
+    }
+
+    public function images()
+    {
+        return $this->hasMany(AdditionalImage::class);
     }
 
     protected static function boot()
@@ -39,8 +45,8 @@ class Product extends Model
             $product->slug = $product->slug ?: Str::slug($product->name);
         });
 
-        // static::updating(function ($product) {
-        //     $product->slug = $product->slug ?: Str::slug($product->name);
-        // });
+        static::updating(function ($product) {
+            $product->slug = $product->slug ?: Str::slug($product->name);
+        });
     }
 }

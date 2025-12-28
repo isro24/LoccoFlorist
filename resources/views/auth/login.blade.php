@@ -29,15 +29,6 @@
         </div>
 
         <div class="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl border border-white/60 p-8">
-            
-            @if (session('lock_remaining'))
-                <div id="lockoutBox"
-                    data-remaining="{{ session('lock_remaining') }}"
-                    class="mb-4 bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-center text-sm">
-                    Akun Anda terkunci. Coba lagi dalam
-                    <span id="lockoutTimer" class="font-semibold"></span>
-                </div>
-            @endif
 
             <form id="loginForm" action="{{ route('admin.login') }}" method="POST" novalidate>
                 @csrf
@@ -119,7 +110,7 @@
         </div>
 
         <p class="text-center text-xs text-gray-500 mt-6">
-            © 2024 Locco Florist. All rights reserved.
+            © 2025 Locco Florist. All rights reserved.
         </p>
     </div>
 

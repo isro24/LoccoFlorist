@@ -5,18 +5,13 @@
 ])
 
 <section 
-    class="relative h-[600px] flex items-center text-white bg-cover bg-center bg-no-repeat"
-    style="background-image: url('{{ $imageUrl }}'); background-size: cover; background-position: center;"
+    class="relative h-[80vh] md:h-[85vh]  flex items-center justify-center bg-cover bg-center"
+    style="background-image: url('{{ $imageUrl }}');"
+    aria-label="{{ $altText }}"
 >
-    <div class="absolute inset-0" 
-         style="background-color: rgba(0,0,0,{{ $brightness }});"></div>
+    <div class="absolute inset-0" style="background-color: rgba(0,0,0,{{ $brightness }});"></div>
 
-    <div class="container mx-auto px-6 md:px-12 relative z-10 py-12">
-        <div class="flex flex-wrap">
-            <div class="w-full lg:w-6/12 text-left">
-                {{ $slot }}
-            </div>
-        </div>
+    <div class="relative z-10 w-full px-4 md:px-8 lg:px-16 flex flex-col items-center justify-center text-center h-full">
+        {{ $slot }}
     </div>
 </section>
-

@@ -30,7 +30,7 @@ Route::view('about-us', 'customer.about-us')->name('about.us');
 Route::post('/pesan-via-whatsapp', [OrderController::class, 'send'])->name('order.send');
 
 // Admin Routes
-Route::prefix('admin')->middleware('auth')->group(function () {
+Route::prefix('admin')->middleware(['auth', 'no-cache', 'admin-only'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard.index');
 
     Route::get('category', [CategoryController::class, 'index'])->name('admin.category.index');
@@ -47,6 +47,9 @@ Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/product/{product}/edit', [AdminProductController::class, 'edit'])->name('admin.product.edit');
     Route::put('/product/{product}', [AdminProductController::class, 'update'])->name('admin.product.update');
     Route::delete('/product/{product}', [AdminProductController::class, 'destroy'])->name('admin.product.destroy');
+    Route::post('/product/toggle-best-seller/{id}', [AdminProductController::class, 'toggleBestSeller'])->name('product.toggle-best-seller');
+
+    Route::delete('product/image/{id}', [AdminProductController::class, 'destroyImage'])->name('admin.product.image.destroy');
 
     Route::get('/product/autocomplete', [AdminProductController::class, 'autocomplete'])->name('admin.product.autocomplete');
 });

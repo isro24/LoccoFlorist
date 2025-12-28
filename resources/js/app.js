@@ -1,25 +1,31 @@
 // import './bootstrap';
 // import * as bootstrap from 'bootstrap';
 
-import AOS from 'aos';
-import 'aos/dist/aos.css'; 
+import AOS from "aos";
+import "aos/dist/aos.css";
 
-
-document.addEventListener('DOMContentLoaded', function() {
-    
+document.addEventListener("DOMContentLoaded", function () {
     // Initialize AOS
     AOS.init({
         duration: 800,
-        easing: 'ease-out-cubic',
+        easing: "ease-out-cubic",
         once: true,
-        offset: 50
+        offset: 50,
     });
 
-    if ('loading' in HTMLImageElement.prototype) {
-        document.querySelectorAll('img[loading="lazy"]').forEach(img => {
+    if ("loading" in HTMLImageElement.prototype) {
+        document.querySelectorAll('img[loading="lazy"]').forEach((img) => {
             if (img.src) {
                 img.src = img.src;
             }
         });
     }
+
+    window.addEventListener("load", function () {
+        AOS.refresh();
+    });
+
+    setTimeout(() => {
+        AOS.refresh();
+    }, 500);
 });

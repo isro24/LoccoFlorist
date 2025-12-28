@@ -1,7 +1,6 @@
 @if ($paginator->hasPages())
     <nav role="navigation" aria-label="Navigasi Halaman" class="flex flex-col items-center mt-10">
         
-        {{-- Bagian menampilkan info halaman saat ini --}}
         <div class="mb-2 text-gray-500 text-sm">
             Menampilkan <span class="font-semibold">{{ $paginator->firstItem() }}</span>–
             <span class="font-semibold">{{ $paginator->lastItem() }}</span> dari 
@@ -10,7 +9,6 @@
 
 
         <ul class="inline-flex items-center gap-1 text-sm font-medium">
-            {{-- Tombol Previous --}}
             @if ($paginator->onFirstPage())
                 <li>
                     <span class="px-3 py-2 rounded-xl bg-pink-100 text-pink-300 cursor-not-allowed select-none flex items-center justify-center transition-all duration-200">
@@ -26,7 +24,6 @@
                 </li>
             @endif
 
-            {{-- Looping angka halaman --}}
             @foreach ($elements as $element)
                 @if (is_string($element))
                     <li>

@@ -58,7 +58,7 @@
 
                     <button type="submit" 
                         class="px-5 py-2 bg-pinkButton text-white font-semibold rounded-lg hover:opacity-90 transition cursor-pointer">
-                        Update
+                        Simpan Perubahan
                     </button>
                 </div>
 

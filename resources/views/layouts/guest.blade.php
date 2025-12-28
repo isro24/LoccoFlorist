@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,12 +12,17 @@
     <title>@yield('title', 'Locco Florist')</title>
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;700&family=Nunito:wght@400;600;700&display=swap"
+        rel="stylesheet">
 
     <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet"> -->
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2212%22 font-size=%2212%22>🌸</text></svg>">
-    
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22><text y=%2212%22 font-size=%2212%22>🌸</text></svg>">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -24,6 +30,7 @@
     @stack('styles')
 
 </head>
+
 <body class="pb-[65px] lg:pb-0">
 
     @include('layouts.partials.navigation')
@@ -42,9 +49,7 @@
 
     @stack('scripts')
 
-    <a href="https://wa.me/6281234567890"
-    target="_blank"
-    class="fixed bottom-25 md:bottom-6 right-5 z-50 bg-[#25D366] text-white 
+    <a href="https://wa.me/6281234567890" target="_blank" class="fixed bottom-25 md:bottom-6 right-5 z-50 bg-[#25D366] text-white 
             shadow-lg rounded-full flex items-center
             transition-all duration-300 hover:scale-105 hover:bg-[#1EBE59]">
 
@@ -57,8 +62,24 @@
         </span>
     </a>
 
+    @if(session('wa_link'))
+    <div id="wa-link" data-url="{{ session('wa_link') }}" style="display:none"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var waUrl = document.getElementById('wa-link')?.dataset?.url;
+            console.log("Membuka WhatsApp:", waUrl);
+            if (waUrl) {
+                window.location.href = waUrl;
+            }
+        });
+
+    </script>
+    @endif
+
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 </body>
+
 </html>

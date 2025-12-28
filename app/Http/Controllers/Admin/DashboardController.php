@@ -26,10 +26,10 @@ class DashboardController extends Controller
             ->get();
 
         $monthlyProducts = Product::select(
-                DB::raw('MONTH(created_at) as month'),
-                DB::raw('YEAR(created_at) as year'),
-                DB::raw('COUNT(*) as total')
-            )
+            DB::raw('MONTH(created_at) as month'),
+            DB::raw('YEAR(created_at) as year'),
+            DB::raw('COUNT(*) as total')
+        )
             ->where('created_at', '>=', now()->subMonths(6))
             ->groupBy('year', 'month')
             ->orderBy('year', 'asc')

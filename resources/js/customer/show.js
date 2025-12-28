@@ -1,49 +1,41 @@
 // Modal Control
 function ModalControl(modalId, openBtnId, closeBtnId) {
     const modal = document.getElementById(modalId);
-    const backdrop = document.getElementById(modalId + 'Backdrop');
+    const backdrop = document.getElementById(modalId + "Backdrop");
     const openBtn = document.getElementById(openBtnId);
     const closeBtn = document.getElementById(closeBtnId);
 
     if (!modal || !backdrop || !openBtn || !closeBtn) return;
 
     const openModal = () => {
-        backdrop.classList.remove('hidden');
-        modal.classList.remove('hidden');
-
-        document.body.style.overflow = 'hidden';
-
+        backdrop.classList.remove("hidden");
+        modal.classList.remove("hidden");
+        document.body.style.overflow = "hidden";
         setTimeout(() => {
-            backdrop.classList.add('opacity-100');
-            modal.classList.add('opacity-100', 'translate-y-0');
+            backdrop.classList.add("opacity-100");
+            modal.classList.add("opacity-100", "translate-y-0");
         }, 10);
-
-        modal.setAttribute('aria-hidden', 'false');
+        modal.setAttribute("aria-hidden", "false");
         modal.focus();
-
-        initAutocomplete();
     };
 
     const closeModal = () => {
-        backdrop.classList.remove('opacity-100');
-        modal.classList.remove('opacity-100', 'translate-y-0');
-        
-        document.body.style.overflow = '';
-
+        backdrop.classList.remove("opacity-100");
+        modal.classList.remove("opacity-100", "translate-y-0");
+        document.body.style.overflow = "";
         setTimeout(() => {
-            backdrop.classList.add('hidden');
-            modal.classList.add('hidden');
+            backdrop.classList.add("hidden");
+            modal.classList.add("hidden");
         }, 300);
-
-        modal.setAttribute('aria-hidden', 'true');
+        modal.setAttribute("aria-hidden", "true");
     };
 
-    openBtn.addEventListener('click', openModal);
-    closeBtn.addEventListener('click', closeModal);
-    backdrop.addEventListener('click', closeModal);
+    openBtn.addEventListener("click", openModal);
+    closeBtn.addEventListener("click", closeModal);
+    backdrop.addEventListener("click", closeModal);
 
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.classList.contains("hidden")) {
             closeModal();
         }
     });
@@ -54,275 +46,276 @@ function TabControl(tabsContainerId) {
     const tabsContainer = document.getElementById(tabsContainerId);
     if (!tabsContainer) return;
 
-    const tabButtons = tabsContainer.querySelectorAll('button[data-tab-target]');
-    const tabContents = document.querySelectorAll('[data-tab-content]');
+    const tabButtons = tabsContainer.querySelectorAll("button[data-tab-target]");
+    const tabContents = document.querySelectorAll("[data-tab-content]");
 
-    tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
+    tabButtons.forEach((button) => {
+        button.addEventListener("click", () => {
             const targetId = button.dataset.tabTarget;
             const targetContent = document.getElementById(targetId);
 
-            tabButtons.forEach(btn => {
-                btn.classList.remove('text-[#ff4b8b]', 'border-[#ff4b8b]');
-                btn.classList.add('text-gray-600', 'border-transparent', 'hover:border-gray-300');
+            tabButtons.forEach((btn) => {
+                btn.classList.remove("text-[#ff4b8b]", "border-[#ff4b8b]");
+                btn.classList.add("text-gray-600", "border-transparent", "hover:border-gray-300");
             });
 
-            tabContents.forEach(content => content.classList.add('hidden'));
+            tabContents.forEach((content) => content.classList.add("hidden"));
 
-            button.classList.add('text-[#ff4b8b]', 'border-[#ff4b8b]');
-            button.classList.remove('text-gray-600', 'border-transparent', 'hover:border-gray-300');
+            button.classList.add("text-[#ff4b8b]", "border-[#ff4b8b]");
+            button.classList.remove("text-gray-600", "border-transparent", "hover:border-gray-300");
 
-            if (targetContent) targetContent.classList.remove('hidden');
+            if (targetContent) targetContent.classList.remove("hidden");
         });
     });
 }
 
-// Google Maps + Autocomplete
-let map, marker, geocoder, distanceService;
-const tokoPos = { lat: -7.801194, lng: 110.364917 }; 
+// Interaksi Halaman Utama
+document.addEventListener("DOMContentLoaded", () => {
+    ModalControl("orderModal", "openOrderModalBtn", "closeOrderModalBtn");
+    TabControl("productTabs");
 
-window.initMap = function() {
-    const defaultPos = { lat: -7.7956, lng: 110.3695 };
-    const mapElement = document.getElementById("map");
-    if (!mapElement) return;
-
-    map = new google.maps.Map(mapElement, {
-        center: defaultPos,
-        zoom: 13,
-        disableDefaultUI: true,
-        zoomControl: true
-    });
-
-    geocoder = new google.maps.Geocoder();
-    distanceService = new google.maps.DistanceMatrixService();
-
-    marker = new google.maps.Marker({
-        position: defaultPos,
-        map: map,
-        draggable: true
-    });
-
-    marker.addListener('dragend', () => {
-        const pos = marker.getPosition();
-        updateLocationInput(pos.lat(), pos.lng());
-    });
-
-    map.addListener('click', (e) => {
-        marker.setPosition(e.latLng);
-        updateLocationInput(e.latLng.lat(), e.latLng.lng());
-    });
-
-    // Cek geolocation user
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const userPos = { lat: position.coords.latitude, lng: position.coords.longitude };
-                map.setCenter(userPos);
-                marker.setPosition(userPos);
-                updateLocationInput(userPos.lat, userPos.lng);
-            },
-            () => updateLocationInput(defaultPos.lat, defaultPos.lng)
-        );
-    } else {
-        updateLocationInput(defaultPos.lat, defaultPos.lng);
-    }
-};
-
-// Inisialisasi Autocomplete 
-function initAutocomplete() {
-    const searchInput = document.getElementById('map-search-input');
-    if (!searchInput) return;
-
-    if (searchInput.autocompleteInstance) {
-        google.maps.event.clearInstanceListeners(searchInput.autocompleteInstance);
+    // Init Flatpickr
+    if (typeof flatpickr !== "undefined") {
+        flatpickr("#delivery_date", {
+            dateFormat: "Y-m-d",
+            minDate: "today",
+            locale: "id",
+            disableMobile: "true",
+        });
+        flatpickr("#delivery_time", {
+            enableTime: true,
+            noCalendar: true,
+            dateFormat: "H:i",
+            time_24hr: true,
+            minTime: "08:00",
+            maxTime: "22:00",
+            disableMobile: "true",
+        });
     }
 
-    const autocomplete = new google.maps.places.Autocomplete(searchInput);
-    searchInput.autocompleteInstance = autocomplete;
-    autocomplete.bindTo('bounds', map);
-
-    autocomplete.addListener('place_changed', () => {
-        const place = autocomplete.getPlace();
-        if (!place.geometry || !place.geometry.location) return;
-        map.setCenter(place.geometry.location);
-        map.setZoom(17);
-        marker.setPosition(place.geometry.location);
-        updateLocationInput(place.geometry.location.lat(), place.geometry.location.lng());
-    });
-
-    const style = document.createElement('style');
-    style.innerHTML = `.pac-container { z-index: 2000 !important; }`;
-    document.head.appendChild(style);
-}
-
-// Update input lokasi + jarak
-function updateLocationInput(lat, lng) {
-    const input = document.getElementById('receiver_location');
-    if (!input) return;
-    input.value = "Memuat alamat...";
-
-    geocoder.geocode({ location: { lat, lng } }, (results, status) => {
-        input.value = (status === "OK" && results[0]) ? results[0].formatted_address : `Koordinat: ${lat.toFixed(6)}, ${lng.toFixed(6)}`;
-    });
-
-    distanceService.getDistanceMatrix({
-        origins: [tokoPos],
-        destinations: [{ lat, lng }],
-        travelMode: google.maps.TravelMode.DRIVING,
-    }, (response, status) => {
-        if (status === "OK" && response.rows[0].elements[0].status === "OK") {
-            const distanceText = response.rows[0].elements[0].distance.text;
-            const durationText = response.rows[0].elements[0].duration.text;
-            let infoBox = document.getElementById('distance-info');
-            if (!infoBox) {
-                infoBox = document.createElement('div');
-                infoBox.id = 'distance-info';
-                infoBox.className = 'text-gray-500 mt-2 text-sm';
-                input.after(infoBox);
+    // Input Validasi WA
+    const receiverInput = document.getElementById('receiver_phone_input');
+    if (receiverInput) {
+        receiverInput.addEventListener("input", function () {
+            this.value = this.value.replace(/[^0-9]/g, "");
+            if (this.value.length > 15) this.value = this.value.slice(0, 15);
+            if (!this.value.startsWith("0") || this.value.length < 10) {
+                this.classList.add("border-red-500", "text-red-600");
+            } else {
+                this.classList.remove("border-red-500", "text-red-600");
             }
-            infoBox.innerHTML = `<i class="bi bi-truck text-red-600"></i> Jarak dari toko: <b>${distanceText}</b> (± ${durationText})`;
-        }
-    });
-}
+        });
+    }
 
-// Interaksi Halaman
-document.addEventListener('DOMContentLoaded', () => {
+    // Logila Tampilan Dinamis 
+    const categoryInput = document.getElementById("categoryType");
+    const typeValue = categoryInput ? categoryInput.value.toLowerCase() : "";
 
-    // Modal
-    ModalControl('orderModal', 'openOrderModalBtn', 'closeOrderModalBtn');
+    const isBanner = typeValue.includes("banner");
+    const isPapan = typeValue.includes("papan");
+    const isBunga = typeValue.includes("bunga");
 
-    // Tabs
-    TabControl('productTabs');
+    // Wrapper Elements
+    const bannerFields = document.getElementById("bannerSpecificFields");
+    const locationWrapper = document.getElementById("locationFieldsWrapper");
+    const boardWrapper = document.getElementById("formatKalimatWrapper");
+    const pickupMethodWrapper = document.getElementById("pickupMethodWrapper");
+    
+    // Receiver Elements
+    const receiverNameContainer = document.getElementById("receiverNameContainer");
+    const receiverPhoneContainer = document.getElementById("receiverPhoneContainer");
 
-    // Opsi Produk (Sewa papan / Bunga / Banner)
-    const boardTypeWrapper = document.getElementById('boardTypeWrapper');
-    const formatWrapper = document.getElementById('formatKalimatWrapper');
+    // Inputs for Validation 
+    const bannerOptionInput = document.getElementById("banner_option");
+    const pickupMethodInput = document.getElementById("pickup_method");
+    const locationInput = document.getElementById("receiver_location");
+    const detailedInput = document.getElementById("detailedInput");
+    const receiverNameInput = document.getElementById("receiver_name_input");
+    const receiverPhoneInput = document.getElementById("receiver_phone_input");
 
-    const typeInput = document.querySelector('input[name="type"]');
-    const productType = typeInput ? typeInput.value.toLowerCase() : '';
+    // Labels
+    const labelDateAction = document.getElementById("labelDateAction");
+    const labelTimeAction = document.getElementById("labelTimeAction");
 
-    const isPapan = productType.includes('papan');
+    if (bannerFields) bannerFields.classList.add("hidden");
+    if (locationWrapper) locationWrapper.classList.add("hidden");
+    if (boardWrapper) boardWrapper.classList.add("hidden");
+    if (pickupMethodWrapper) pickupMethodWrapper.classList.add("hidden");
+    if (receiverNameContainer) receiverNameContainer.classList.add("hidden");
+    if (receiverPhoneContainer) receiverPhoneContainer.classList.add("hidden");
+
+    if (locationInput) locationInput.removeAttribute("required");
+    if (detailedInput) detailedInput.removeAttribute("required");
+    if (bannerOptionInput) bannerOptionInput.removeAttribute("required");
+    if (pickupMethodInput) pickupMethodInput.removeAttribute("required");
+    if (receiverNameInput) receiverNameInput.removeAttribute("required");
+    if (receiverPhoneInput) receiverPhoneInput.removeAttribute("required");
 
     if (isPapan) {
-        if (boardTypeWrapper) {
-            boardTypeWrapper.classList.remove('hidden');
-            const input = boardTypeWrapper.querySelector('input');
-            if (input) input.disabled = false;
-        }
+        if (locationWrapper) locationWrapper.classList.remove("hidden");
+        if (boardWrapper) boardWrapper.classList.remove("hidden");
+        if (receiverNameContainer) receiverNameContainer.classList.remove("hidden");
+        if (receiverPhoneContainer) receiverPhoneContainer.classList.remove("hidden");
 
-        if (formatWrapper) {
-            formatWrapper.classList.remove('hidden');
-            formatWrapper.querySelectorAll('input, textarea')
-                .forEach(el => el.disabled = false);
+        if (locationInput) locationInput.setAttribute("required", "true");
+        if (detailedInput) detailedInput.setAttribute("required", "true");
+        if (receiverNameInput) receiverNameInput.setAttribute("required", "true");
+        if (receiverPhoneInput) receiverPhoneInput.setAttribute("required", "true");
+
+        if (labelDateAction) labelDateAction.innerText = "Pengantaran";
+        if (labelTimeAction) labelTimeAction.innerText = "Pengantaran";
+    } 
+    else if (isBanner) {
+        if (bannerFields) {
+            bannerFields.classList.remove("hidden");
+            bannerFields.classList.add("grid");
         }
+        if (pickupMethodWrapper) pickupMethodWrapper.classList.remove("hidden");
+
+        if (bannerOptionInput) bannerOptionInput.setAttribute("required", "true");
+        if (pickupMethodInput) pickupMethodInput.setAttribute("required", "true");
+
+        if (labelDateAction) labelDateAction.innerText = "Pengambilan/Antar";
+        if (labelTimeAction) labelTimeAction.innerText = "Pengambilan/Antar";
+    } 
+
+    else if (isBunga) {
+        if (pickupMethodWrapper) pickupMethodWrapper.classList.remove("hidden");
+        
+        if (pickupMethodInput) pickupMethodInput.setAttribute("required", "true");
+
+        if (labelDateAction) labelDateAction.innerText = "Pengambilan/Antar";
+        if (labelTimeAction) labelTimeAction.innerText = "Pengambilan/Antar";
     }
 
-    // Validasi Nomor Telepon
-    const receiverInput = document.getElementById('receiver_phone');
-    if (receiverInput) {
-        const orderForm = receiverInput.closest('form');
-        const invalidClasses = ['border-red-500','text-red-600','focus:border-red-500','focus:ring-red-500','focus:ring-2'];
-        const defaultClasses = ['border-none','focus:shadow-[0_0_0_3px_rgba(255,128,171,0.3)]','focus:ring-0'];
+    // Banner Price 
+    const bannerOption = document.getElementById("banner_option");
+    const paxWrapper = document.getElementById("paxWrapper");
+    const paxSelect = document.getElementById("banner_pax_select");
+    const priceWrapper = document.getElementById("priceEstimationWrapper");
+    const displayPrice = document.getElementById("displayPrice");
+    const inputEstimatedPrice = document.getElementById("inputEstimatedPrice");
 
-        receiverInput.addEventListener('input', function() {
-            this.value = this.value.replace(/[^0-9]/g, '');
-            if (this.value.length > 15) this.value = this.value.slice(0,15);
+    function calculateBannerPrice() {
+        if (!isBanner) return;
 
-            if (!this.value.startsWith('0') || this.value.length < 10) {
-                this.classList.remove(...defaultClasses);
-                this.classList.add(...invalidClasses);
+        const selectedOption = bannerOption.options[bannerOption.selectedIndex];
+        let basePrice = selectedOption ? parseInt(selectedOption.getAttribute("data-price")) : 0;
+        if (isNaN(basePrice)) basePrice = 0;
+
+        const needsPax = selectedOption ? selectedOption.getAttribute("data-needs-pax") === "true" : false;
+
+        let extraPrice = 0;
+        if (needsPax && paxSelect.value !== "") {
+            extraPrice = parseInt(paxSelect.value);
+        }
+        if (isNaN(extraPrice)) extraPrice = 0;
+
+        const finalPrice = basePrice + extraPrice;
+
+        if (basePrice > 0) {
+            priceWrapper.classList.remove("hidden");
+            if (needsPax && paxSelect.value === "") {
+                displayPrice.innerText = "Rp " + basePrice.toLocaleString("id-ID") + " (Pilih jumlah orang)";
+                inputEstimatedPrice.value = basePrice;
             } else {
-                this.classList.remove(...invalidClasses);
-                this.classList.add(...defaultClasses);
+                displayPrice.innerText = "Rp " + finalPrice.toLocaleString("id-ID");
+                inputEstimatedPrice.value = finalPrice;
             }
-        });
+        } else {
+            priceWrapper.classList.add("hidden");
+            inputEstimatedPrice.value = "";
+        }
+    }
 
-        orderForm.addEventListener('submit', function(e) {
-            if (!receiverInput.value.startsWith('0') || receiverInput.value.length < 10) {
-                e.preventDefault();
-                receiverInput.classList.remove(...defaultClasses);
-                receiverInput.classList.add(...invalidClasses);
-                receiverInput.focus();
+    if (bannerOption) {
+        bannerOption.addEventListener("change", function () {
+            const selectedOption = this.options[this.selectedIndex];
+            const needsPax = selectedOption.getAttribute("data-needs-pax") === "true";
+
+            if (needsPax) {
+                paxWrapper.classList.remove("hidden");
+                if (paxSelect) paxSelect.setAttribute("required", "true");
+            } else {
+                paxWrapper.classList.add("hidden");
+                if (paxSelect) {
+                    paxSelect.removeAttribute("required");
+                    paxSelect.value = "";
+                }
             }
+            calculateBannerPrice();
         });
     }
 
-    // Quantity Selector
-    const decreaseBtn = document.getElementById('decreaseQty');
-    const increaseBtn = document.getElementById('increaseQty');
-    const quantityInput = document.getElementById('quantityInput');
-
-    if (decreaseBtn && increaseBtn && quantityInput) {
-        increaseBtn.addEventListener('click', () => {
-            let current = parseInt(quantityInput.value) || 1;
-            quantityInput.value = current + 1;
-        });
-
-        decreaseBtn.addEventListener('click', () => {
-            let current = parseInt(quantityInput.value) || 1;
-            if (current > 1) quantityInput.value = current - 1;
-        });
-
-        quantityInput.addEventListener('input', () => {
-            let val = parseInt(quantityInput.value);
-            if (isNaN(val) || val < 1) quantityInput.value = 1;
+    if (paxSelect) {
+        paxSelect.addEventListener("change", function () {
+            calculateBannerPrice();
         });
     }
 
-    // Zoom Efek Gambar Produk
-    document.querySelectorAll('.zoom-container').forEach(container => {
-        const img = container.querySelector('.zoom-image');
-        if (!img) return;
-
-        let targetX = 50, targetY = 50;
-        let currentX = 50, currentY = 50;
-
-        container.addEventListener('mousemove', e => {
-            const rect = container.getBoundingClientRect();
-            targetX = ((e.clientX - rect.left) / rect.width) * 100;
-            targetY = ((e.clientY - rect.top) / rect.height) * 100;
+    // Gosend Alert 
+    const pickupMethod = document.getElementById("pickup_method");
+    const gosendAlert = document.getElementById("gosendAlert");
+    if (pickupMethod) {
+        pickupMethod.addEventListener("change", function () {
+            if (this.value === "gosend") gosendAlert.classList.remove("hidden");
+            else gosendAlert.classList.add("hidden");
         });
+    }
 
-        container.addEventListener('mouseleave', () => {
-            targetX = 50;
-            targetY = 50;
-        });
-
-        function animate() {
-            currentX += (targetX - currentX) * 0.1;
-            currentY += (targetY - currentY) * 0.1;
-            img.style.transformOrigin = `${currentX}% ${currentY}%`;
-            requestAnimationFrame(animate);
+    // Image Slider Manual & Fullscreen
+    window.changeImage = function (src) {
+        const mainImage = document.getElementById("main-product-image");
+        if (mainImage) {
+            mainImage.style.opacity = 0.5;
+            setTimeout(() => {
+                mainImage.src = src;
+                mainImage.style.opacity = 1;
+                const thumbnails = document.querySelectorAll("#product-thumbnails button");
+                thumbnails.forEach((btn) => {
+                    btn.classList.remove("border-pinkButton");
+                    btn.classList.add("border-transparent");
+                    const img = btn.querySelector("img");
+                    if (img && img.src === src) {
+                        btn.classList.remove("border-transparent");
+                        btn.classList.add("border-pinkButton");
+                    }
+                });
+            }, 150);
         }
+    };
 
-        animate();
-    });
+    const fullscreenModal = document.getElementById('fullscreenModal');
+    const fullscreenImage = document.getElementById('fullscreenImage');
+    const mainProductImage = document.getElementById('main-product-image');
 
-    // Datepicker
-    flatpickr("#delivery_date", {
-        dateFormat: "Y-m-d",
-        minDate: "today",
-        locale: {
-            firstDayOfWeek: 1,
-            weekdays: {
-                shorthand: ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'],
-                longhand: ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu']
-            },
-            months: {
-                shorthand: ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'],
-                longhand: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember']
-            }
+    window.openFullscreen = function() {
+        if (!fullscreenModal || !fullscreenImage || !mainProductImage) return;
+        fullscreenImage.src = mainProductImage.src;
+        fullscreenModal.classList.remove('hidden');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            fullscreenModal.classList.remove('opacity-0');
+            fullscreenImage.classList.remove('scale-95');
+            fullscreenImage.classList.add('scale-100');
+        }, 10);
+    };
+
+    window.closeFullscreen = function() {
+        if (!fullscreenModal || !fullscreenImage) return;
+        fullscreenModal.classList.add('opacity-0');
+        fullscreenImage.classList.remove('scale-100');
+        fullscreenImage.classList.add('scale-95');
+        setTimeout(() => {
+            fullscreenModal.classList.add('hidden');
+            fullscreenImage.src = '';
+            document.body.style.overflow = '';
+        }, 300);
+    };
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !fullscreenModal.classList.contains('hidden')) {
+            closeFullscreen();
         }
     });
-
-    // Timepicker
-    flatpickr("#delivery_time", {
-        enableTime: true,
-        noCalendar: true,
-        dateFormat: "H:i",
-        time_24hr: true,
-        minTime: "08:00",
-        maxTime: "20:00"
-    });
-
 });

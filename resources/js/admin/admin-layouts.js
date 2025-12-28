@@ -1,46 +1,46 @@
-$(document).ready(function() {
-    const sidebar = $('#sidebar');
-    const sidebarToggle = $('#sidebar-toggle');
-    const closeBtn = $('#close-sidebar-btn');
-    const wrapper = $('#admin-wrapper');
-    const searchInput = $('#searchInput');
-    const clearBtn = $('#clearSearch');
+$(document).ready(function () {
+    const sidebar = $("#sidebar");
+    const sidebarToggle = $("#sidebar-toggle");
+    const closeBtn = $("#close-sidebar-btn");
+    const wrapper = $("#admin-wrapper");
+    const searchInput = $("#searchInput");
+    const clearBtn = $("#clearSearch");
 
     const isMobile = () => window.innerWidth < 992;
 
     // Toggle sidebar mobile
-    sidebarToggle.on('click', function() {
+    sidebarToggle.on("click", function () {
         if (isMobile()) {
-            sidebar.toggleClass('-translate-x-full');
-            if (sidebar.hasClass('-translate-x-full')) {
-                closeBtn.addClass('hidden');
+            sidebar.toggleClass("-translate-x-full");
+            if (sidebar.hasClass("-translate-x-full")) {
+                closeBtn.addClass("hidden");
             } else {
-                closeBtn.removeClass('hidden');
+                closeBtn.removeClass("hidden");
             }
         }
     });
 
-    closeBtn.on('click', function() {
+    closeBtn.on("click", function () {
         if (isMobile()) {
-            sidebar.addClass('-translate-x-full');
-            closeBtn.addClass('hidden');
+            sidebar.addClass("-translate-x-full");
+            closeBtn.addClass("hidden");
         }
     });
 
-    // Logout Confirmation 
-    $('#logout-btn').on('click', function(e) {
+    // Logout Confirmation
+    $("#logout-btn").on("click", function (e) {
         e.preventDefault();
         Swal.fire({
-            title: 'Apakah kamu yakin ingin keluar?',
-            icon: 'warning',
+            title: "Apakah kamu yakin ingin keluar?",
+            icon: "warning",
             showCancelButton: true,
-            confirmButtonText: 'Ya',
-            cancelButtonText: 'Tidak',
+            confirmButtonText: "Ya",
+            cancelButtonText: "Tidak",
             reverseButtons: true,
-            confirmButtonColor: '#ff4d94',
-            cancelButtonColor: '#6c757d',
+            confirmButtonColor: "#ff4d94",
+            cancelButtonColor: "#6c757d",
         }).then((result) => {
-            if (result.isConfirmed) $('#logout-form').submit();
+            if (result.isConfirmed) $("#logout-form").submit();
         });
     });
 
@@ -51,51 +51,69 @@ $(document).ready(function() {
         const form = $(formSelector);
 
         function toggleBtn() {
-            clearBtn.toggleClass('hidden', input.val().trim() === '');
+            clearBtn.toggleClass("hidden", input.val().trim() === "");
         }
 
-        input.on('input', toggleBtn);
+        input.on("input", toggleBtn);
 
-        clearBtn.on('click', function() {
-            input.val('');
+        clearBtn.on("click", function () {
+            input.val("");
             toggleBtn();
             form.submit();
         });
 
-        toggleBtn(); 
+        toggleBtn();
     }
 
     // Desktop search
-    setupClearSearch('#searchInput', '#clearSearch', '#searchForm');
+    setupClearSearch("#searchInput", "#clearSearch", "#searchForm");
 
     // Mobile search
-    setupClearSearch('#mobileSearchInput', '#mobileClearSearch', '#mobileSearchForm');
+    setupClearSearch(
+        "#mobileSearchInput",
+        "#mobileClearSearch",
+        "#mobileSearchForm"
+    );
 
     // Toggle mobile search dropdown
-    const mobileSearchDropdown = $('#mobile-search-dropdown');
-    $('#mobile-search-btn').on('click', function(e) {
+    const mobileSearchDropdown = $("#mobile-search-dropdown");
+    $("#mobile-search-btn").on("click", function (e) {
         e.stopPropagation();
-        mobileSearchDropdown.toggleClass('opacity-0 invisible translate-y-0 -translate-y-2 opacity-100 visible');
+        mobileSearchDropdown.toggleClass(
+            "opacity-0 invisible translate-y-0 -translate-y-2 opacity-100 visible"
+        );
     });
 
-    $(document).on('click', function(e) {
-        if (!$('#mobile-search-btn').is(e.target) && $('#mobile-search-btn').has(e.target).length === 0 &&
-            !mobileSearchDropdown.is(e.target) && mobileSearchDropdown.has(e.target).length === 0) {
-            mobileSearchDropdown.addClass('opacity-0 invisible -translate-y-2')
-                                .removeClass('opacity-100 visible translate-y-0');
+    $(document).on("click", function (e) {
+        if (
+            !$("#mobile-search-btn").is(e.target) &&
+            $("#mobile-search-btn").has(e.target).length === 0 &&
+            !mobileSearchDropdown.is(e.target) &&
+            mobileSearchDropdown.has(e.target).length === 0
+        ) {
+            mobileSearchDropdown
+                .addClass("opacity-0 invisible -translate-y-2")
+                .removeClass("opacity-100 visible translate-y-0");
         }
     });
 
     // Profile dropdown
-    const profileBtn = $('.profile-initial-circle');
-    const profileDropdown = profileBtn.next('ul');
+    const profileBtn = $(".profile-initial-circle");
+    const profileDropdown = profileBtn.next("ul");
 
-    profileBtn.on('click', function(e) {
+    profileBtn.on("click", function (e) {
         e.stopPropagation();
-        profileDropdown.toggleClass('hidden');
+        profileDropdown.toggleClass("hidden");
     });
 
-    $(document).on('click', function() {
-        profileDropdown.addClass('hidden');
+    $(document).on("click", function () {
+        profileDropdown.addClass("hidden");
+    });
+
+    // Prevent touchpad/mouse wheel from changing number inputs (e.g., price fields)
+    $(document).on("wheel", "input[type=number]", function () {
+        if (document.activeElement === this) {
+            this.blur();
+        }
     });
 });

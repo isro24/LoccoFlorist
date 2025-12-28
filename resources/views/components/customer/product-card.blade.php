@@ -2,6 +2,13 @@
     <div class="border-none shadow-md  h-full bg-white overflow-hidden transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow group rounded-lg">
         <a href="{{ route('product.show', $product->slug) }}" class="no-underline text-gray-900">
             <div class="relative overflow-hidden rounded-sm">
+                @if($product->is_best_seller)
+                    <div class="absolute top-0 left-0 z-20">
+                        <div class="bg-pink-500 text-white text-[10px] md:text-xs font-bold px-3 py-1.5 rounded-br-xl shadow-md flex items-center gap-1">
+                            <i class="bi bi-star-fill text-yellow-300 text-[10px]"></i> Best Seller
+                        </div>
+                    </div>
+                @endif
                 <div class="aspect-square">
                     <img 
                         src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/400' }}" 

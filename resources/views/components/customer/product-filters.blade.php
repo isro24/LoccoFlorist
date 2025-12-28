@@ -8,7 +8,7 @@
                     onchange="this.form.submit()">
                 <option value="">Semua Kategori</option>
                 @foreach($categories as $category)
-                    <option value="{{ $category->name }}" @selected(request('category') == $category->name)>
+                    <option value="{{ $category->slug }}" @selected(request('category') == $category->slug)>
                         {{ $category->name }}
                     </option>
                 @endforeach
@@ -35,7 +35,8 @@
                     onchange="this.form.submit()">
                 <option value="">Semua Kategori</option>
                 @foreach($categories as $category)
-                    <option value="{{ $category->name }}" @selected(request('category') == $category->name)>
+                    {{-- PERUBAHAN DI SINI JUGA: value pakai slug --}}
+                    <option value="{{ $category->slug }}" @selected(request('category') == $category->slug)>
                         {{ $category->name }}
                     </option>
                 @endforeach

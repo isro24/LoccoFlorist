@@ -30,7 +30,6 @@
                     </x-form.select>
 
                     <x-form.input type="number" name="price" label="Harga" required
-                        class = "no-spin"
                         oninvalid="this.setCustomValidity('Mohon masukkan harga produk')" 
                         oninput="this.setCustomValidity('')" />
 
@@ -40,6 +39,7 @@
                         <option value="1" {{ old('status', 1) == 1 ? 'selected' : '' }}>Tersedia</option>
                         <option value="0" {{ old('status') == '0' ? 'selected' : '' }}>Tidak tersedia</option>
                     </x-form.select>
+                    
 
                 </div>
 
@@ -53,6 +53,21 @@
                     <x-form.file-input name="image" label="Gambar Produk" accept="image/*" required
                         oninvalid="this.setCustomValidity('Mohon masukkan gambar produk')" 
                         oninput="this.setCustomValidity('')" />
+                </div>
+
+                <div class="mt-6">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">
+                        Gambar Tambahan (opsional)
+                    </label>
+
+                    <input type="file" 
+                        id="extra_images" 
+                        name="extra_images[]" 
+                        multiple 
+                        accept="image/*"
+                        class="block w-full text-sm border rounded-lg p-2">
+
+                    <div id="extraImagesPreview" class="flex flex-wrap gap-3 mt-3"></div>
                 </div>
 
                 <div class="mt-8 flex justify-end gap-3">

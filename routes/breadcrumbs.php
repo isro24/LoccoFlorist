@@ -9,5 +9,5 @@ Breadcrumbs::for('product.catalog', function (Trail $trail) {
 
 Breadcrumbs::for('product.show', function (Trail $trail, $product) {
     $trail->parent('product.catalog');
-    $trail->push($product->name, route('product.show', $product->id)); 
+    $trail->push($product->name, route('product.show', $product->id));
 });

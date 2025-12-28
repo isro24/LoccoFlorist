@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Category; 
-use Illuminate\Http\Request; 
+use App\Models\Category;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -13,9 +13,19 @@ class ProductController extends Controller
     {
         $products = Product::with('category')
             ->where('status', true)
+            ->where('is_best_seller', true)
             ->latest()
-            ->take(8) 
+            ->take(4)
             ->get();
+
+
+        if ($products->isEmpty()) {
+            $products = Product::with('category')
+                ->where('status', true)
+                ->latest()
+                ->take(4)
+                ->get();
+        }
 
         return view('customer.index', compact('products'));
     }
@@ -26,19 +36,23 @@ class ProductController extends Controller
 
         if ($request->filled('category')) {
             $query->whereHas('category', function ($q) use ($request) {
-                $q->where('name', $request->category);
-            });
-        }
-        
-        if ($request->filled('search')) {
-            $searchTerm = $request->search;
-            $query->where(function ($q) use ($searchTerm) {
-                $q->where('name', 'like', "%{$searchTerm}%")
-                  ->orWhere('description', 'like', "%{$searchTerm}%");
+                $q->where('slug', $request->category);
             });
         }
 
-        switch ($request->input('sort', 'latest')) { 
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+
+            $query->where(function ($q) use ($searchTerm) {
+                $q->where('name', 'like', "%{$searchTerm}%")
+                ->orWhere('description', 'like', "%{$searchTerm}%")
+                ->orWhereHas('category', function ($cat) use ($searchTerm) {
+                    $cat->where('name', 'like', "%{$searchTerm}%");
+                });
+            });
+        }
+
+        switch ($request->input('sort', 'latest')) {
             case 'price_asc':
                 $query->orderBy('price', 'asc');
                 break;
@@ -46,10 +60,10 @@ class ProductController extends Controller
                 $query->orderBy('price', 'desc');
                 break;
             default:
-                $query->latest(); 
+                $query->latest();
                 break;
         }
-        
+
         $categories = Category::all();
 
         $products = $query->paginate(8)->appends($request->except('page'));
@@ -59,9 +73,9 @@ class ProductController extends Controller
 
     public function show($slug)
     {
-        $product = Product::with('category')->where('slug', $slug)->firstOrFail();
+        $product = Product::with('category', 'images')->where('slug', $slug)->firstOrFail();
 
-        if (!$product->status){
+        if (!$product->status) {
             return redirect()->route('home')->with('warning', 'Product tidak tersedia');
         }
 
@@ -73,5 +87,4 @@ class ProductController extends Controller
 
         return view('customer.show', compact('product', 'relatedProducts'));
     }
-
 }
