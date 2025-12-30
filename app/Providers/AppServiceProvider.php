@@ -24,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::share('categories', Category::all());
+        try {
+            View::share('categories', Category::all());
+        } catch (\Exception $e) {
+            // Database not available yet, skip sharing categories
+        }
     }
 }
