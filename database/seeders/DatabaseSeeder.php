@@ -3,13 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Admin;
-use App\Models\Category;
-use App\Models\Product;
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Foundation\Auth\User as AuthUser;
-use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -20,7 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        $user = AuthUser::factory()->create([
+        $user = Admin::factory()->create([
             'name' => 'Locco Florist',
             'email' => 'locco@gmail.com',
             'password' => bcrypt('password'),
