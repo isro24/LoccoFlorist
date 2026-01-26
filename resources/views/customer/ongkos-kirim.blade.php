@@ -65,39 +65,52 @@
                                        focus:border-[#ff4d94] focus:ring-4 focus:ring-[#ff4d94]/30 transition duration-200 bg-white cursor-pointer">
                                 <option value="">Pilih Kampus / Area...</option>
                                 
-                                <optgroup label="Area Sekitar (Promo)">
-                                    <option value="UMY" data-ongkir="0">UMY</option>
-                                    <option value="Unjaya 2" data-ongkir="0">Unjaya 2</option>
-                                    <option value="Almaata" data-ongkir="0">Almaata</option>
-                                    <option value="UPY" data-ongkir="0">UPY</option>
-                                    <option value="Amayo" data-ongkir="0">Amayo</option>
+                                <optgroup label="Area Sekitar (< 3km)">
+                                    @foreach(config('shipping.locations.free', []) as $location)
+                                        <option value="{{ $location['name'] }}" data-ongkir="{{ config('shipping.rates.free') }}">
+                                            {{ $location['name'] }}
+                                        </option>
+                                    @endforeach
                                 </optgroup>
 
-                                <optgroup label="Yogyakarta Area">
-                                    <option value="Unjaya 1" data-ongkir="20000">Unjaya 1</option>
-                                    <option value="Poltekes Kemenkes" data-ongkir="20000">Poltekes Kemenkes</option>
-                                    <option value="UAD 1" data-ongkir="30000">UAD 1</option>
-                                    <option value="UAD 2" data-ongkir="30000">UAD 2</option>
-                                    <option value="UAD 3" data-ongkir="30000">UAD 3</option>
-                                    <option value="UAD 4" data-ongkir="30000">UAD 4</option>
-                                    <option value="MMTC" data-ongkir="30000">MMTC</option>
-                                    <option value="POLITEKNIK YPKN" data-ongkir="30000">POLITEKNIK YPKN</option>
-                                    <option value="UKDW" data-ongkir="30000">UKDW</option>
-                                    <option value="ISI" data-ongkir="30000">ISI</option>
-                                    <option value="UGM" data-ongkir="35000">UGM</option>
-                                    <option value="UNY" data-ongkir="35000">UNY</option>
-                                    <option value="USD" data-ongkir="35000">USD</option>
-                                    <option value="UII Demangan" data-ongkir="35000">UII Demangan</option>
-                                    <option value="UIN SUKA" data-ongkir="35000">UIN SUKA</option>
-                                    <option value="UTY 1" data-ongkir="35000">UTY 1</option>
-                                    <option value="UTY 2" data-ongkir="35000">UTY 2</option>
-                                    <option value="Marcu Buana 3" data-ongkir="45000">Marcu Buana 3</option>
-                                    <option value="UPN" data-ongkir="45000">UPN</option>
-                                    <option value="Insiter" data-ongkir="45000">Insiter</option>
-                                    <option value="STIE YKPN" data-ongkir="45000">STIE YKPN</option>
-                                    <option value="Pascasarjana UIN SUKA" data-ongkir="45000">Pascasarjana UIN SUKA</option>
-                                    <option value="UII" data-ongkir="55000">UII</option>
-                                    <option value="Area Lain >20 Km" data-ongkir="55000">Area Lain >20 Km</option>
+                                <optgroup label="Area ~5km">
+                                    @foreach(config('shipping.locations.5km', []) as $location)
+                                        <option value="{{ $location['name'] }}" data-ongkir="{{ config('shipping.rates.5km') }}">
+                                            {{ $location['name'] }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+
+                                <optgroup label="Area ~8km">
+                                    @foreach(config('shipping.locations.8km', []) as $location)
+                                        <option value="{{ $location['name'] }}" data-ongkir="{{ config('shipping.rates.8km') }}">
+                                            {{ $location['name'] }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+
+                                <optgroup label="Area ~10km">
+                                    @foreach(config('shipping.locations.10km', []) as $location)
+                                        <option value="{{ $location['name'] }}" data-ongkir="{{ config('shipping.rates.10km') }}">
+                                            {{ $location['name'] }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+
+                                <optgroup label="Area ~17km">
+                                    @foreach(config('shipping.locations.17km', []) as $location)
+                                        <option value="{{ $location['name'] }}" data-ongkir="{{ config('shipping.rates.17km') }}">
+                                            {{ $location['name'] }}
+                                        </option>
+                                    @endforeach
+                                </optgroup>
+
+                                <optgroup label="Area >20km">
+                                    @foreach(config('shipping.locations.20km', []) as $location)
+                                        <option value="{{ $location['name'] }}" data-ongkir="{{ config('shipping.rates.20km') }}">
+                                            {{ $location['name'] }}
+                                        </option>
+                                    @endforeach
                                 </optgroup>
                             </select>
                         </div>
@@ -144,7 +157,7 @@
                     <span class="text-green-700 text-sm font-medium"><span class="font-bold">Gratis Ongkir</span> area UMY, Alma Atta dan sekitarnya</span>
                 </div>
                 <p class="text-xs text-gray-400 mt-2">
-                    Diluar area diatas? <a href="#" class="text-pinkButton hover:underline">Hubungi Admin</a> melalui WA untuk info lengkap.
+                    Di luar area di atas? <a href="#" class="text-pinkButton hover:underline">Hubungi Admin</a> melalui WA untuk info lengkap.
                 </p>
             </div>
 

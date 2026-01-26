@@ -7,6 +7,7 @@ use App\Models\AdditionalImage;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductImage;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -208,7 +209,12 @@ class ProductController extends Controller
                 'success' => true,
                 'message' => 'Status Best Seller berhasil diubah!'
             ]);
-        } catch (\Exception $e) {
+        } catch (AuthorizationException $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Tidak punya izin.'
+            ], 403);
+        } catch (\Throwable $e) {
             return response()->json([
                 'success' => false,
                 'message' => 'Terjadi kesalahan.'

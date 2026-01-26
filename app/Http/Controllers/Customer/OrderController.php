@@ -15,6 +15,8 @@ class OrderController extends Controller
             ->with('category')
             ->firstOrFail();
 
+        $rupiah = static fn ($amount) => 'Rp ' . number_format((float) $amount, 0, ',', '.');
+
         $type = strtolower($product->category->type ?? '');
 
         $isPapan  = str_contains($type, 'papan');
@@ -72,11 +74,19 @@ class OrderController extends Controller
             $sellerNumber = config('umkm.whatsapp.seller_banner_number') ?: $sellerNumber;
         }
 
+        $sellerNumber = preg_replace('/\D+/', '', (string) $sellerNumber);
+        if (str_starts_with($sellerNumber, '0')) {
+            $sellerNumber = '62' . substr($sellerNumber, 1);
+        }
+
         $message  = "\u{1F4E6} *ORDER PRODUK*\n\n";
         $message .= "*Nama Produk:* {$product->name}\n";
         $message .= "*Kategori:* {$product->category->name}\n";
+        if (!is_null($product->price)) {
+            $message .= "*Harga Produk:* " . $rupiah($product->price) . "\n";
+        }
         $message .= "*Nama Pemesan:* {$request->name}\n";
-        $message .= "*Tanggal:* {$request->delivery_date}\n";
+        $message .= "*Tanggal Ambil/Kirim:* {$request->delivery_date}\n";
 
         if ($isPapan) {
             $message .= "*Jam Pengantaran:* {$request->delivery_time}\n";
@@ -92,21 +102,6 @@ class OrderController extends Controller
                 $message .= "*Alamat/Patokan:* {$request->detailed}\n";
             }
             $message .= "(Shareloc menyusul jika diperlukan)\n";
-
-            // $receiver_location = trim($request->receiver_location);
-            // if (preg_match('/https?:\/\/(www\.)?(google\.com\/maps|maps\.app\.goo\.gl|goo\.gl\/maps)/i', $receiver_location)) {
-            //     $locationLink = "📍 *Lokasi Pengiriman (klik untuk buka)*:\n{$receiver_location}";
-            // } elseif (preg_match('/-?\d{1,3}\.\d+,\s*-?\d{1,3}\.\d+/', $receiver_location, $matches)) {
-            //     $coords = trim($matches[0]);
-            //     $googleMapsUrl = "https://www.google.com/maps?q=" . urlencode($coords);
-            //     $locationLink = "📍 *Lokasi Pengiriman (klik untuk buka)*:\n{$googleMapsUrl}";
-            // } else {
-            //     $googleMapsUrl = "https://www.google.com/maps/search/?api=1&query=" . urlencode($receiver_location);
-            //     $locationLink = "📍 *Lokasi Pengiriman (klik untuk buka)*:\n{$googleMapsUrl}";
-            // }
-
-            // $message .= $locationLink . "\n";
-            // $message .= "*Detail:* {$request->detailed}\n";
 
             $message .= "\n-----------------------------------------\n";
             $message .= "\u{1F4DD} *FORMAT KALIMAT*\n\n";
@@ -139,8 +134,7 @@ class OrderController extends Controller
                     $message .= "• Jumlah Wajah: {$paxDisplay}\n";
                 }
                 if ($request->filled('estimated_price')) {
-                    $formattedPrice = number_format((float)$request->estimated_price, 0, ',', '.');
-                    $message .= "• Estimasi Web: *Rp {$formattedPrice}*\n";
+                    $message .= "• Estimasi Total Biaya: *" . $rupiah($request->estimated_price) . "*\n";
                 }
             }
 
@@ -152,13 +146,6 @@ class OrderController extends Controller
             }
         }
 
-
-        // $message .= "\n-----------------------------------------\n";
-        // $message .= "💸 *METODE PEMBAYARAN*\n";
-        // $message .= "Pembayaran hanya dengan:\n• Pesanan : (isi nanti)\n• Ongkir  : (isi nanti)\n*Total = (isi nanti)*\n\n";
-        // $message .= "🏦 BCA 0601350997 \n(An. FADHILA KHAIRUN NISA)\n\n";
-        // $message .= "*Notes:* Wajib melakukan payment terlebih dahulu (minimal DP 50%) / full payment agar pesanan kakak bisa di-keep dan diproses ☺🙏\n\n";
-        // $message .= "WAJIB MELAMPIRKAN BUKTI PEMBAYARAN";
 
         $encodedMessage = rawurlencode($message);
         // $whatsappUrl = "https://wa.me/{$sellerNumber}?text={$encodedMessage}";

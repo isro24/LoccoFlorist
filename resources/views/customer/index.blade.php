@@ -109,23 +109,23 @@
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 hover:shadow-md transition">
                     <div class="text-yellow-400 text-lg mb-3">★★★★★</div>
                     <p class="text-gray-600 italic mb-4 text-sm leading-relaxed">
-                        "Bunganya fresh banget dan rangkaiannya rapi. Adminnya juga fast response pas aku tanya-tanya custom request."
+                        "Ownernya ramah, bunganya cantik-cantik, gemes banget—rangkaiannya rapi dan niat."
                     </p>
-                    <p class="font-bold text-gray-900 font-serif">- Kak Anisa, Jogja</p>
+                    <p class="font-bold text-gray-900 font-serif">Ferari Riswana</p>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 hover:shadow-md transition">
                     <div class="text-yellow-400 text-lg mb-3">★★★★★</div>
                     <p class="text-gray-600 italic mb-4 text-sm leading-relaxed">
-                        "Pesen dadakan buat wisuda temen, untung Locco bisa gercep. Hasilnya bagus pol ga mengecewakan!"
+                        "Aku beli box sama foam aja, tapi dibonusin kertas tisu—baik banget. Boxnya mengkilap, bersih, dan owner fast response."
                     </p>
-                    <p class="font-bold text-gray-900 font-serif">- Mas Rizky, UMY</p>
+                    <p class="font-bold text-gray-900 font-serif">Hyeronz Nia</p>
                 </div>
                 <div class="bg-white p-6 rounded-2xl shadow-sm border border-pink-100 hover:shadow-md transition">
                     <div class="text-yellow-400 text-lg mb-3">★★★★★</div>
                     <p class="text-gray-600 italic mb-4 text-sm leading-relaxed">
-                        "Udah langganan 3x disini buat kirim bunga papan. Selalu ontime dan fotonya real pict."
+                        "Order flowerbag niatnya ambil ke toko, tapi ditawari diantar karena sekalian ada pengantaran di kampus yang sama. Hemat waktu—terima kasih!"
                     </p>
-                    <p class="font-bold text-gray-900 font-serif">- Ibu Ratna, Sleman</p>
+                    <p class="font-bold text-gray-900 font-serif">Yasin Aryaputra</p>
                 </div>
             </div>
         </div>
@@ -157,7 +157,7 @@
                 title="Butuh Bantuan Memilih?"
                 text="Tim kami siap membantu Anda menemukan bunga yang sempurna untuk setiap momen"
                 buttonText="Hubungi Kami"
-                buttonLink="https://wa.me/6281234567890"
+                buttonLink="https://wa.me/{{ config('umkm.whatsapp.seller_number') }}"
                 buttonIcon="bi bi-whatsapp"
             />
         @endif

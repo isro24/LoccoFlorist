@@ -51,7 +51,7 @@
                     <x-form.file-input name="image" label="Ganti Gambar Produk" accept="image/*">
                         @if($product->image)
                             <p class="text-xs text-gray-500 mb-1">Gambar saat ini:</p>
-                            <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" class="mx-auto rounded shadow-sm max-h-52">
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="mx-auto rounded shadow-sm max-h-52">
                         @endif
                     </x-form.file-input>
                 </div>
@@ -73,7 +73,7 @@
                         <div class="flex gap-3 flex-wrap mt-2">
                             @foreach ($product->images as $img)
                                 <div class="relative">
-                                    <img src="{{ Storage::url($img->image) }}" 
+                                    <img src="{{ asset('storage/' . $img->image) }}" 
                                         class="w-24 h-24 object-cover rounded shadow">
 
                                     <button type="button"

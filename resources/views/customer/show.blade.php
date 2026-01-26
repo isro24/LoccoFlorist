@@ -100,7 +100,7 @@
                         </div>
                     </div>
 
-                    <div class="mt-auto sticky bottom-0 bg-white p-4 md:p-0 md:static border-t md:border-0 border-gray-100 z-10 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] md:shadow-none">
+                    <div class="mt-auto sticky bottom-0 bg-white p-4 md:p-0 md:static md:border-0 border-gray-100 z-10 md:shadow-none">
                         <div class="flex flex-col gap-3">
                             <button type="button" 
                                     id="openOrderModalBtn"

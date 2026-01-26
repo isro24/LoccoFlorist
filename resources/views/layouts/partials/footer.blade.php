@@ -8,8 +8,8 @@
                         class="h-[35px] w-auto object-contain rounded-lg mb-4 transition-all duration-200 ease-in-out hover:scale-105 inline-flex">
                 </a>
                 <p class="leading-[1.7] opacity-75 mb-4">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent libero. Sed
-                    cursus ante dapibus diam.
+                    Menyediakan bunga artificial berkualitas premium dengan desain yang bisa dikustomisasi. 
+                    Pelayanan hangat, responsif, dan profesional untuk setiap momen spesial Anda.
                 </p>
                 <h6 class="font-bold mb-2">Ikuti Kami</h6>
                 <div class="flex gap-2">
@@ -64,7 +64,7 @@
                     <li class="flex items-start gap-2">
                         <i class="bi bi-whatsapp mt-1"></i>
                         <div class="flex flex-col">
-                            <a href="https://wa.me/6281234567890" target="_blank"
+                            <a href="https://wa.me/{{ config('umkm.whatsapp.seller_number') }}" target="_blank"
                                 class="text-white no-underline transition-all duration-200 ease-in-out opacity-90 hover:opacity-100">
                                 Chat WhatsApp
                             </a>

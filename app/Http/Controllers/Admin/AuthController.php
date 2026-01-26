@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -18,20 +20,25 @@ class AuthController extends Controller
 
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
-        $email = $request->email;
-
-        $request->validate([
-            'email' => 'required',
-            'password' => 'required',
+        $validated = $request->validate([
+            'email' => ['required', 'email'],
+            'password' => ['required'],
         ]);
 
-        if (Auth::attempt($credentials)) {
+        $email = trim($validated['email']);
+        $password = $validated['password'];
+
+        $admin = Admin::whereRaw('BINARY email = ?', [$email])->first();
+
+        if ($admin && Hash::check($password, $admin->password)) {
+            Auth::login($admin);
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard.index');
         }
 
-        return back()->with('error', 'Email atau password salah!');
+        return back()
+            ->withInput(['email' => $email])
+            ->with('error', 'Email atau password salah!');
     }
 
 

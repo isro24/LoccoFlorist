@@ -62,7 +62,7 @@
                     </button>
                 </div>
                 <div class="flex items-center gap-4 ml-auto">
-                    <form action="{{ route('admin.product.index') }}" method="GET"
+                    <form action="{{ route('admin.product.index') }}" method="GET" onsubmit="return (this.querySelector('input[name=search]')?.value || '').trim().length > 0;"
                         class="relative hidden lg:block transition-all duration-300">
                         <input type="text" name="search" id="searchInput" value="{{ request('search') }}"
                             placeholder="Cari produk..."
@@ -147,6 +147,15 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('scripts')
+
+    <script>
+        window.routes = {
+            toggleBestSeller: "{{ route('product.toggle-best-seller', ':id') }}",
+            productDetail: "{{ route('admin.product.show', ':id') }}",
+            deleteExtraImage: "{{ route('admin.product.image.destroy', ':id') }}",
+        };
+    </script>
+
 </body>
 
 </html>

@@ -34,7 +34,7 @@ class OngkirController extends Controller
         }
 
         $distanceText = $data['rows'][0]['elements'][0]['distance']['text'] ?? '0 km';
-        $distanceValue = $data['rows'][0]['elements'][0]['distance']['value'] ?? 0; // meter
+        $distanceValue = $data['rows'][0]['elements'][0]['distance']['value'] ?? 0; 
 
         $distanceKm = $distanceValue / 1000;
 

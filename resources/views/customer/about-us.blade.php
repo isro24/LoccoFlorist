@@ -28,13 +28,16 @@
                 <h2 class="text-3xl md:text-4xl font-bold font-serif text-gray-800 mb-6">Lebih dari Sekadar Toko Bunga</h2>
                 <div class="text-gray-600 space-y-4 leading-relaxed text-justify">
                     <p>
-                        Berawal dari hobi merangkai bunga di garasi rumah, <b>Locco Florist</b> kini tumbuh menjadi partner setia momen spesial Anda di Yogyakarta.
+                    Locco Florist melayani penyewaan papan bunga seperti mirror sign dan flower box untuk berbagai acara, mulai dari sidang skripsi, engagement, wedding, welcome sign event, hingga grand opening.
                     </p>
+
                     <p>
-                        Kami adalah <b>home-based florist</b> (usaha rumahan). Meskipun tidak memiliki toko display yang besar, setiap tangkai bunga kami pilih dan rangkai dengan penuh cinta dan standar kualitas tinggi.
+                    Selain itu, kami juga menyediakan layanan custom cetak banner lengkap dengan standing, serta penjualan flower bag dengan berbagai pilihan ukuran yang dapat disesuaikan dengan kebutuhan Anda.
                     </p>
+
                     <p>
-                        Konsep "Workshop Rumahan" memungkinkan kami menekan biaya operasional toko, sehingga kami bisa memberikan <b>harga yang lebih bersahabat</b> kepada Anda tanpa mengurangi kualitas bunga sedikitpun.
+                    Kepercayaan pelanggan menjadi bukti kualitas layanan kami. Banyak pelanggan yang melakukan repeat order karena kepuasan terhadap hasil dan pelayanan yang kami berikan.<br>
+                    Jangan ragu untuk mempercayakan momen bahagia Anda bersama <strong>Locco Florist</strong>.
                     </p>
                 </div>
             </div>
@@ -65,7 +68,7 @@
                         </div>
                         <h4 class="text-2xl font-bold font-serif mt-6 mb-4 text-gray-800">Visi Kami</h4>
                         <p class="text-gray-600 leading-relaxed text-lg italic">
-                            "Menjadi pionir keindahan melalui rangkaian bunga artificial yang menghidupkan setiap sudut ruangan dan mengabadikan setiap momen berharga dengan sentuhan seni yang abadi."
+                            "Menjadi florist terpercaya di Yogyakarta yang menghadirkan rangkaian bunga dan dekorasi berkualitas untuk setiap momen spesial, dengan sentuhan personal, estetika, dan pelayanan yang berkesan."
                         </p>
                     </div>
 
@@ -78,16 +81,30 @@
                         <h4 class="text-2xl font-bold font-serif mt-6 mb-4 text-gray-800">Misi Kami</h4>
                         <ul class="space-y-4">
                             <li class="flex items-start gap-3">
-                                <div class="bg-pink-100 rounded-full p-1 mt-1"><i class="bi bi-check text-pink-600 text-sm"></i></div>
-                                <p class="text-gray-600">Menyediakan produk bunga artificial dengan kualitas material premium.</p>
+                                <div class="bg-pink-100 rounded-full p-1 mt-1">
+                                    <i class="bi bi-check text-pink-600 text-sm"></i>
+                                </div>
+                                <p class="text-gray-600">
+                                    Menyediakan rangkaian bunga dan produk dekorasi dengan kualitas terbaik dan tampilan yang estetik.
+                                </p>
                             </li>
+
                             <li class="flex items-start gap-3">
-                                <div class="bg-pink-100 rounded-full p-1 mt-1"><i class="bi bi-check text-pink-600 text-sm"></i></div>
-                                <p class="text-gray-600">Memberikan kemudahan kustomisasi desain sesuai karakter pelanggan.</p>
+                                <div class="bg-pink-100 rounded-full p-1 mt-1">
+                                    <i class="bi bi-check text-pink-600 text-sm"></i>
+                                </div>
+                                <p class="text-gray-600">
+                                    Memberikan layanan custom yang fleksibel sesuai kebutuhan acara dan keinginan pelanggan.
+                                </p>
                             </li>
+
                             <li class="flex items-start gap-3">
-                                <div class="bg-pink-100 rounded-full p-1 mt-1"><i class="bi bi-check text-pink-600 text-sm"></i></div>
-                                <p class="text-gray-600">Menghadirkan pelayanan yang hangat, responsif, dan profesional.</p>
+                                <div class="bg-pink-100 rounded-full p-1 mt-1">
+                                    <i class="bi bi-check text-pink-600 text-sm"></i>
+                                </div>
+                                <p class="text-gray-600">
+                                    Mengutamakan pelayanan yang ramah, responsif, dan profesional dalam setiap proses pemesanan.
+                                </p>
                             </li>
                         </ul>
                     </div>
@@ -150,7 +167,7 @@
                             <div>
                                 <h5 class="font-bold text-gray-800">WhatsApp</h5>
                                 <p class="text-sm text-gray-600 mt-1 hover:text-pinkButton transition">
-                                    <a href="https://wa.me/628988351393" target="_blank">+62 891-2345-6789</a>
+                                    <a href="https://wa.me/628988351393" target="_blank">+62 898-8351-393</a>
                                 </p>
                             </div>
                         </div>
@@ -181,7 +198,7 @@
                 title="Siap Membuat Momen Anda Berkesan?"
                 text="Hubungi kami sekarang dan wujudkan rangkaian bunga impian Anda"
                 buttonText="Hubungi Kami"
-                buttonLink="https://wa.me/6281234567890"
+                buttonLink="https://wa.me/{{ config('umkm.whatsapp.seller_number') }}"
                 buttonIcon="bi bi-whatsapp"
             />
         </div>

@@ -88,6 +88,8 @@ $(document).ready(function () {
         const imageId = btn.data("id");
         const csrfToken = $('meta[name="csrf-token"]').attr("content");
 
+        const url = window.routes.deleteExtraImage.replace(':id', imageId);
+
         Swal.fire({
             title: "Yakin hapus gambar ini?",
             text: "Gambar yang dihapus tidak bisa dikembalikan!",
@@ -101,13 +103,18 @@ $(document).ready(function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
-                    url: `/admin/product/image/${imageId}`,
+                    url: url,
                     type: "POST",
-                    data: { _method: "DELETE", _token: csrfToken },
+                    data: { _method: "DELETE" },
+                    headers: {
+                        "X-CSRF-TOKEN": csrfToken,
+                        "Accept": "application/json"
+                    },
                     success: function (response) {
                         btn.closest("div").fadeOut(300, function () {
                             $(this).remove();
                         });
+
                         Swal.fire({
                             icon: "success",
                             title: "Berhasil!",
@@ -181,37 +188,40 @@ $(document).ready(function () {
 
     document.querySelectorAll(".toggle-best-seller").forEach((toggle) => {
         toggle.addEventListener("change", function () {
-            const productId = this.getAttribute("data-id");
+            const productId = this.dataset.id;
             const isChecked = this.checked;
 
-            fetch(`/admin/product/toggle-best-seller/${productId}`, {
+            const url = window.routes.toggleBestSeller.replace(':id', productId);
+
+            fetch(url, {
                 method: "POST",
                 headers: {
+                    "Accept": "application/json",
                     "Content-Type": "application/json",
                     "X-CSRF-TOKEN": document
-                        .querySelector('meta[name="csrf-token"]')
-                        .getAttribute("content"),
+                        .querySelector('meta[name="csrf-token"]').content,
                 },
-                body: JSON.stringify({
-                    status: isChecked,
-                }),
+                body: JSON.stringify({ status: isChecked }),
             })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        console.log("Update sukses");
-                    } else {
-                        this.checked = !isChecked;
-                        alert("Gagal mengubah status.");
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                if (!data.success) {
                     this.checked = !isChecked;
-                    alert("Terjadi kesalahan koneksi.");
-                });
+                    alert("Gagal mengubah status.");
+                }
+            })
+            .catch(() => {
+                this.checked = !isChecked;
+                alert("Terjadi kesalahan koneksi.");
+            });
         });
     });
+
 });
 
 // Modal detail produk
@@ -250,8 +260,14 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("detail-image").innerHTML =
                 '<div class="h-64 flex items-center justify-center"><div class="animate-spin rounded-full h-8 w-8 border-b-2 border-pink-500"></div></div>';
 
-            fetch(`/admin/product/${productId}`)
-                .then((res) => res.json())
+            const url = window.routes.productDetail.replace(':id', productId);
+                fetch(url, {
+                    headers: { "Accept": "application/json" }
+                })
+                .then(res => {
+                    if (!res.ok) throw new Error(res.status);
+                    return res.json();
+                })
                 .then((product) => {
                     document.getElementById("detail-name").textContent =
                         product.name;

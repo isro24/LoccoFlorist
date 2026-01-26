@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
             dateFormat: "H:i",
             time_24hr: true,
             minTime: "08:00",
-            maxTime: "22:00",
+            maxTime: "23:00",
             disableMobile: "true",
         });
     }
@@ -260,6 +260,70 @@ document.addEventListener("DOMContentLoaded", () => {
         pickupMethod.addEventListener("change", function () {
             if (this.value === "gosend") gosendAlert.classList.remove("hidden");
             else gosendAlert.classList.add("hidden");
+        });
+    }
+
+    // Tipe Ucapan: allow custom input
+    const orderForm = document.getElementById("orderForm");
+    const boardTypeSelect = document.getElementById("board_type");
+    const boardTypeCustomWrapper = document.getElementById("boardTypeCustomWrapper");
+    const boardTypeCustomInput = document.getElementById("board_type_custom");
+    const boardTypeCustomError = document.getElementById("board_type_custom_error");
+
+    function ensureBoardTypeOption(value) {
+        if (!boardTypeSelect || !value) return;
+
+        const options = Array.from(boardTypeSelect.options);
+        const exists = options.some((opt) => opt.value === value);
+        if (exists) return;
+
+        const opt = document.createElement("option");
+        opt.value = value;
+        opt.textContent = value;
+        opt.dataset.custom = "true";
+
+        const customPlaceholder = boardTypeSelect.querySelector('option[value="__custom__"]');
+        boardTypeSelect.insertBefore(opt, customPlaceholder || null);
+    }
+
+    function setCustomUIVisible(visible) {
+        if (!boardTypeCustomWrapper) return;
+        if (visible) boardTypeCustomWrapper.classList.remove("hidden");
+        else boardTypeCustomWrapper.classList.add("hidden");
+
+        if (boardTypeCustomError) boardTypeCustomError.classList.add("hidden");
+    }
+
+    if (boardTypeSelect && boardTypeCustomWrapper && boardTypeCustomInput) {
+        // If coming back with old custom value already selected, keep it
+        const initialValue = boardTypeSelect.value;
+        if (initialValue && initialValue !== "__custom__") {
+            ensureBoardTypeOption(initialValue);
+        }
+        setCustomUIVisible(boardTypeSelect.value === "__custom__");
+
+        boardTypeSelect.addEventListener("change", function () {
+            setCustomUIVisible(this.value === "__custom__");
+            if (this.value === "__custom__") {
+                boardTypeCustomInput.focus();
+            }
+        });
+    }
+
+    if (orderForm && boardTypeSelect && boardTypeCustomInput) {
+        orderForm.addEventListener("submit", function (e) {
+            if (boardTypeSelect.value !== "__custom__") return;
+
+            const customText = (boardTypeCustomInput.value || "").trim();
+            if (!customText) {
+                e.preventDefault();
+                if (boardTypeCustomError) boardTypeCustomError.classList.remove("hidden");
+                boardTypeCustomInput.focus();
+                return;
+            }
+
+            ensureBoardTypeOption(customText);
+            boardTypeSelect.value = customText;
         });
     }
 

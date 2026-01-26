@@ -49,7 +49,7 @@
 
     @stack('scripts')
 
-    <a href="https://wa.me/6281234567890" target="_blank" class="fixed bottom-25 md:bottom-6 right-5 z-50 bg-[#25D366] text-white 
+    <a href="https://wa.me/{{ config('umkm.whatsapp.seller_number') }}" target="_blank" class="fixed bottom-25 md:bottom-6 right-5 z-50 bg-[#25D366] text-white 
             shadow-lg rounded-full flex items-center
             transition-all duration-300 hover:scale-105 hover:bg-[#1EBE59]">
 

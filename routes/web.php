@@ -40,14 +40,16 @@ Route::prefix('admin')->middleware(['auth', 'no-cache', 'admin-only'])->group(fu
     Route::put('category/{category}', [CategoryController::class, 'update'])->name('admin.category.update');
     Route::delete('category/{category}', [CategoryController::class, 'destroy'])->name('admin.category.destroy');
 
+    Route::post('/product/toggle-best-seller/{id}', [AdminProductController::class, 'toggleBestSeller'])->name('product.toggle-best-seller');
+    Route::put('/product/{product}', [AdminProductController::class, 'update'])->name('admin.product.update');
+
     Route::get('/product', [AdminProductController::class, 'index'])->name('admin.product.index');
     Route::get('/product/create', [AdminProductController::class, 'create'])->name('admin.product.create');
     Route::post('/product', [AdminProductController::class, 'store'])->name('admin.product.store');
     Route::get('/product/{product}', [AdminProductController::class, 'show'])->name('admin.product.show');
     Route::get('/product/{product}/edit', [AdminProductController::class, 'edit'])->name('admin.product.edit');
-    Route::put('/product/{product}', [AdminProductController::class, 'update'])->name('admin.product.update');
     Route::delete('/product/{product}', [AdminProductController::class, 'destroy'])->name('admin.product.destroy');
-    Route::post('/product/toggle-best-seller/{id}', [AdminProductController::class, 'toggleBestSeller'])->name('product.toggle-best-seller');
+
 
     Route::delete('product/image/{id}', [AdminProductController::class, 'destroyImage'])->name('admin.product.image.destroy');
 

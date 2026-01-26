@@ -148,11 +148,17 @@
                     </div>
 
                     <div id="locationFieldsWrapper" class="col-span-1 md:col-span-2 hidden bg-gray-50 p-4 rounded-2xl border border-gray-200">
-                        <div class="flex items-center gap-2 mb-3">
-                            <div class="bg-pink-100 p-1.5 rounded-full text-pinkButton text-xs">
-                                <i class="bi bi-geo-alt-fill"></i>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <div class="flex items-center gap-2">
+                                <div class="bg-pink-100 p-1.5 rounded-full text-pinkButton text-xs">
+                                    <i class="bi bi-geo-alt-fill"></i>
+                                </div>
+                                <h6 class="font-bold text-gray-700 text-sm">Lokasi Pengantaran</h6>
                             </div>
-                            <h6 class="font-bold text-gray-700 text-sm">Lokasi Pengantaran</h6>
+                            <a href="{{ route('ongkos.kirim') }}" target="_blank" 
+                               class="text-xs font-semibold text-pinkButton hover:text-pink-700 underline flex items-center gap-1 transition">
+                                <i class="bi bi-calculator"></i> Cek Ongkir
+                            </a>
                         </div>
 
                         <div class="grid grid-cols-1 gap-3">
@@ -192,10 +198,14 @@
                             <select name="board_type" id="board_type" class="w-full border-gray-200 rounded-xl">
                                 <option value="">Pilih Tipe</option>
                                 <option value="Ucapan Selamat">Ucapan Selamat</option>
-                                <option value="Happy Wedding">Happy Wedding</option>
-                                <option value="Duka Cita">Duka Cita</option>
-                                <option value="Grand Opening">Grand Opening</option>
+                                <option value="__custom__">Lainnya (Tulis Sendiri)</option>
                             </select>
+
+                            <div id="boardTypeCustomWrapper" class="hidden mt-3">
+                                <label class="block text-xs font-bold text-gray-600 mb-1">Tipe Ucapan (Custom)</label>
+                                <input type="text" id="board_type_custom" class="w-full border-gray-200 rounded-xl py-2 px-4" placeholder="Contoh: Ucapan Terima Kasih">
+                                <p id="board_type_custom_error" class="hidden text-xs text-red-600 mt-1">Tipe ucapan custom wajib diisi.</p>
+                            </div>
                         </div>
                         <div class="mb-4">
                             <label class="block text-sm font-bold text-gray-700 mb-2">Nama + Gelar</label>
